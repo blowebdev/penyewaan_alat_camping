@@ -1,7 +1,7 @@
 <?php 
 if (!in_array($_SESSION['level'], array('1','2'))) {
-echo  "<br>Maaf halaman tidak bisa di akses";
-exit;
+	echo  "<br>Maaf halaman tidak bisa di akses";
+	exit;
 }
 ?>
 <div class="row">
@@ -30,10 +30,18 @@ if (in_array($_SESSION['level'], array('1'))) {
 	$_SESSION['id_pelanggan']= str_replace('/', '', $_REQUEST['id2']);
 }
 if (isset($_REQUEST['simpan'])) {
+	$kode = $_REQUEST['kode'];
 	$id_pelanggan = $_SESSION['id_pelanggan'];
 	$kode_transaksi = $_REQUEST['id'];
 	foreach ($_REQUEST['isi_pertanyaan'] as $id_produk => $data) {
 		$id_produk = $id_produk;
+		$keterangan = $_REQUEST['keterangan_'.$id_produk];
+		$sql_review= "UPDATE `master_detail_transaksi` SET review = '".$keterangan."' 
+						WHERE kode_transaksi = '".$kode_transaksi."' 
+						AND id_produk='".$id_produk."' 
+						AND id_pelanggan='".$id_pelanggan."'";
+		// echo $sql_review;
+		mysqli_query($conn,$sql_review);
 		foreach ($data as $key => $d) {
 			$id_pertanyaan = $key;
 			foreach ($d as $key => $isi) {
@@ -64,12 +72,12 @@ if (isset($_REQUEST['simpan'])) {
 					'".$isi."',
 					'".$kode_transaksi."'
 				)";
-				}
-				// echo  $sql."<br>";
-				mysqli_query($conn,$sql);
 			}
+				// echo  $sql."<br>";
+			mysqli_query($conn,$sql);
 		}
 	}
+}
 }
 ?>
 <div class="row">
@@ -97,7 +105,10 @@ if (isset($_REQUEST['simpan'])) {
 									".$q."
 									");
 								$no=1;
-								while ($data = mysqli_fetch_array($trxsql)) {?>	
+								while ($data = mysqli_fetch_array($trxsql)) {
+									$review_res = mysqli_query($conn,"SELECT * FROM master_detail_transaksi WHERE kode_transaksi='".$_REQUEST['id']."' AND id_pelanggan='".$_SESSION['id_pelanggan']."' AND id_produk='".$data['id']."'");
+									$review = mysqli_fetch_array($review_res);
+									?>	
 
 									<div class="card mb-1">
 										<div class="card-header" id="headingOne">
@@ -107,7 +118,7 @@ if (isset($_REQUEST['simpan'])) {
 												</a>
 											</h2>
 										</div>
-
+										<input type="hidden" name="kode" value="<?php echo $data['id']; ?>">
 										<div id="collapseOne<?php echo $data['id']; ?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 											<div class="card-body">
 												<table class="table">
@@ -136,17 +147,25 @@ if (isset($_REQUEST['simpan'])) {
 																		>Tidak Setuju</option>
 																		<option value="3"
 																		<?php echo ($isi['jawaban']==3) ? "selected": ""; ?>
-																		>Setuju</option>
+																		>Netral</option>
 																		<option value="4"
 																		<?php echo ($isi['jawaban']==4) ? "selected": ""; ?>
+																		>Setuju</option>
+																		<option value="5" 
+																		<?php echo ($isi['jawaban']==5) ? "selected": ""; ?>
 																		>Sangat Setuju</option>
 																	</select>
 																</td>
 															</tr>
 														<?php } ?>
+														<tr>
+															<td>5. </td>
+															<td>
+																<label>Review</label>
+																<textarea class="form-control" name="keterangan_<?php echo $data['id']; ?>" placeholder="Review"><?php echo $review['review']; ?></textarea>
+															</td>
+														</tr>
 													</table>
-													<label>Review</label>
-													<textarea class="form-control" placeholder="Review" ></textarea>
 												</div>
 											</div>
 										</div>

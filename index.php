@@ -180,11 +180,11 @@ session_start();
 									</ul>
 								</li>
 								<li class="has-submenu">
-									<a href="#"><i class="fa fa-calculator"></i> SPK - SAW <div class="arrow-down"></div></a>
+									<a href="#"><i class="fa fa-calculator"></i> Review <div class="arrow-down"></div></a>
 									<ul class="submenu">
 										<li>
 											<a href="<?php echo $base_url; ?>pertanyaan">Pertanyaan</a>
-											<a href="<?php echo $base_url; ?>saw">Perhitungan</a>
+											<a href="<?php echo $base_url; ?>hasil_review">Hasil Review</a>
 										</li>
 									</ul>
 								</li>
