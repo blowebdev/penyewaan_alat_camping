@@ -55,7 +55,6 @@ if (isset($_REQUEST['update_lunas'])) {
 						<table id="basic-datatable" class="table table-stripped">
 							<thead class="table-light" style="background-color: #dfe6e9; font-weight: bold;">
 								<tr>
-									<th width="1%">#</th>
 									<th width="5%">Tanggal</th>
 									<th width="5%">Kode</th>
 									<th width="10%">Nama</th>
@@ -84,7 +83,6 @@ if (isset($_REQUEST['update_lunas'])) {
 								while ($data = mysqli_fetch_array($wxc)) {
 									?>
 									<tr>
-										<td><?php echo $no++; ?></td>
 										<td nowrap=""><?php echo $data['tanggal_pemesanan']; ?></td>
 										<td><a href="show_detail_transaksi/<?php echo $data['kode_transaksi']; ?>">#<?php echo $data['kode_transaksi']; ?></a></td>
 										<td style="font-weight: bold;"><?php echo $data['nama']; ?></td>
@@ -122,10 +120,10 @@ if (isset($_REQUEST['update_lunas'])) {
 												<?php else : ?>
 												<?php if($data['status']=='LUNAS') : ?>
 													<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>" class="btn btn-warning btn-sm" title="Review"><i class="fa fa-star"></i></a>
-												
-
-													<?php endif ?>
+													<?php else : ?>
 													<a href="<?php echo $base_url; ?>show_detail_transaksi/<?php echo $data['kode_transaksi']; ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+													<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i></a>
+													<?php endif ?>
 												<?php endif; ?>
 											</td>
 										</tr>
