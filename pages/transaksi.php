@@ -113,7 +113,7 @@ if (isset($_REQUEST['update_lunas'])) {
 
 														<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>/<?php echo $data['id_pelanggan']; ?>" class="dropdown-item" type="submit"><i class="fe-slack mr-2 text-muted font-18 vertical-middle"></i>Review</a>
 
-														<a href="<?php echo $base_url; ?>saw/<?php echo $data['kode_transaksi']; ?>/<?php echo $data['id_pelanggan']; ?>" class="dropdown-item" type="submit"><i class=" ti-back-right mr-2 text-muted font-18 vertical-middle"></i> SAW</a>
+														<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class=" ti-back-right mr-2 text-muted font-18 vertical-middle"></i> Struk Pembayaran</a>
 														
 													</div>
 												</div>

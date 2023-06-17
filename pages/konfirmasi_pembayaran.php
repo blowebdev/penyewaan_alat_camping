@@ -1,5 +1,5 @@
  <?php 
- if (!in_array($_SESSION['level'], array('2'))) {
+ if (!in_array($_SESSION['level'], array('2','1','3'))) {
     echo  "<br>Maaf halaman tidak bisa di akses";
     exit;
 }
@@ -125,6 +125,8 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                                 <div class="col-sm-10">
                                     <?php if(in_array($_SESSION['level'], array('1','2'))) : ?>
                                         <button class="btn btn-danger" type="submit" name="simpan">Simpan</button>
+                                        <?php else : ?>
+                                            
                                     <?php endif; ?>
                                 </div>
                             </div>
