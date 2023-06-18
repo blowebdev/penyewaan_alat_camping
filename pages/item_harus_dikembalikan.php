@@ -41,8 +41,7 @@
                         <h3 class="text-warning">
                             <?php 
                             $total_proses = mysqli_num_rows(mysqli_query($conn,"
-                                SELECT a.*, b.*, a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up, DATEDIFF(a.tgl_selesai,NOW()) AS sisa_hari FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                WHERE status='Proses'
+                               SELECT o.* FROM ( SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o WHERE o.status='Proses' AND o.status_up<>'SUDAH';
                                 "));
 
                             echo number_format($total_proses);
@@ -168,7 +167,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                         <td><?php echo hari_tanggal($data['tgl_pinjam']); ?></td>
                                         <td><?php echo hari_tanggal($data['tgl_selesai']); ?></td>
                                         <td><?php echo $data['total_hari']; ?> Hari</td>
-                                        <td><?php echo ($data['sisa_hari']<=1) ? "- ".$data['sisa_hari'] : "+ ".$data['sisa_hari']; ?> Hari</td>
+                                        <td><?php echo ($data['sisa_hari']<=1) ? "".$data['sisa_hari'] : "+ ".$data['sisa_hari']; ?> Hari</td>
                                         <td><?php echo ($data['sisa_hari']<=1) ? "" : number_format(5000*$data['sisa_hari']); ?></td>
                                         <td><?php 
                                         if($data['status_up']=='SUDAH'){
