@@ -64,6 +64,10 @@ if (isset($_REQUEST['simpan'])) {
 
 
 $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi WHERE kode_transaksi='".$_REQUEST['id']."'"));
+ if(in_array($_SESSION['level'], array('1')) AND empty($detail['struk'])) :
+     echo  "<br> <br><a href='".$base_url."transaksi' class='btn btn-danger'>Kembali</a><br><div class='alert alert-danger'>Maaf pelanggan belum upload struk pembayaran</div>";
+    exit;
+ endif; 
 ?>
 <div class="row">
     <div class="col-12">
@@ -102,9 +106,9 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                             <div class="col-sm-10">
                                 <select class="form-control" name="bank" readonly>
                                     <option value="">Pilih rekening</option>
-                                    <option value="BNI">BNI / 8839948575</option>
-                                    <option value="BRI">BRI / 9294847575</option>
-                                    <option value="BCA">BCA / 0199288384</option>
+                                    <option value="BNI" <?php echo ($detail['bank']=='BNI') ? "selected" : ""; ?>>BNI / 8839948575</option>
+                                    <option value="BRI" <?php echo ($detail['bank']=='BRI') ? "selected" : ""; ?>>BRI / 9294847575</option>
+                                    <option value="BCA" <?php echo ($detail['bank']=='BCA') ? "selected" : ""; ?>>BCA / 0199288384</option>
                                 </select>
                             </div>
                         </div>
@@ -121,9 +125,9 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                                 </div>
                             </div>
                             <div class="form-group row">
+                                    <?php if(in_array($_SESSION['level'], array('2'))) : ?>
                                 <label class="col-sm-2 col-form-label" for="example-email">Aksi</label>
                                 <div class="col-sm-10">
-                                    <?php if(in_array($_SESSION['level'], array('1','2'))) : ?>
                                         <button class="btn btn-danger" type="submit" name="simpan">Simpan</button>
                                         <?php else : ?>
                                             

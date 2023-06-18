@@ -64,6 +64,7 @@ if (isset($_REQUEST['update_lunas'])) {
 									<th width="30%">Biaya Kirim</th>
 									<th width="30%">Grand Total</th>
 									<th width="30%">Status Pembayaran</th>
+									<th width="30%">Struk</th>
 									<th width="1%" nowrap="">Aksi</th>
 								</tr>
 							</thead>
@@ -92,6 +93,7 @@ if (isset($_REQUEST['update_lunas'])) {
 										<td>Rp. <?php echo number_format($data['biaya_kirim']); ?></td>
 										<td nowrap="" style="font-weight: bold;">Rp. <?php echo number_format($data['grand_total']); ?></td>
 										<td><?php echo status($data['status']); ?></td>
+										<td><?php echo (empty($data['bank'])) ? "<p class='text-danger'>BELUM UPLOAD</p>": "<p class='text-success'>SUDAH</p>"; ?></td>
 										<td nowrap="">
 											<?php if(in_array($_SESSION['level'], array('1'))) : ?>
 												<div class="btn-group dropdown">
