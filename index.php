@@ -216,7 +216,7 @@ session_start();
 									<a href="#"><i class="fe-shopping-bag"></i>Laporan <div class="arrow-down"></div></a>
 									<ul class="submenu">
 										<li>
-											<a href="<?php echo $base_url; ?>#">Laporan</a>
+											<a href="<?php echo $base_url; ?>laporan">Laporan</a>
 										</li>
 									</ul>
 								</li>
