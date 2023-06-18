@@ -37,7 +37,7 @@
 							<div class="product-info border-top p-3">
 
 								<div>
-									<h5 class="font-16 mt-0 mb-1"><a href="ecommerce-product-detail.html" class="text-dark"><?php echo $dapod['nama']; ?></a> </h5>
+									<h5 class="font-16 mt-0 mb-1"><a href="<?php echo $base_url; ?>detail/<?php echo $dapod['id']; ?>" class="text-dark"><?php echo $dapod['nama']; ?></a> </h5>
 									<p class="text-muted">
 											<?php for ($i=1; $i <=number_format($review_bintan['jawaban'],2) ; $i++) { 
 												echo '<i class="mdi mdi-star text-warning"></i>';
