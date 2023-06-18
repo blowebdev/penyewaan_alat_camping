@@ -159,10 +159,10 @@ if (isset($_REQUEST['simpan'])) {
 															</tr>
 														<?php } ?>
 														<tr>
-															<td>5. </td>
+															<td>6. </td>
 															<td>
-																<label>Review</label>
-																<textarea class="form-control" name="keterangan_<?php echo $data['id']; ?>" placeholder="Review"><?php echo $review['review']; ?></textarea>
+																<label>Komentar</label>
+																<textarea class="form-control" name="keterangan_<?php echo $data['id']; ?>" placeholder="Komentar"><?php echo $review['review']; ?></textarea>
 															</td>
 														</tr>
 													</table>
