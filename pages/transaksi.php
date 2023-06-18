@@ -138,7 +138,7 @@ if (isset($_REQUEST['update_lunas'])) {
 								</tbody>
 								<tfoot class="table-light" style="background-color: #dfe6e9">
 									<tr>
-										<td colspan="5">Total Transaksi</td>
+										<td colspan="4">Total Transaksi</td>
 										<td style="font-weight: bold;"></td>
 										<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_harga); ?></td>
 										<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($pengiriman); ?></td>
