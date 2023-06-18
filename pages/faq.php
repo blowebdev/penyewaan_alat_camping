@@ -37,7 +37,7 @@
 
                              <div>
                                 <div class="faq-question-q-box">2.</div>
-                                <h4 class="faq-question">Lokasi</h4>
+                                <h4 class="faq-question">Dimana lokasi toko ?</h4>
                                 <p class="faq-answer">
                                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.646664273813!2d112.46379277476294!3d-7.504202392508316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e780d37cb64ab9d%3A0xc1b36533fafea86!2sSurya%20outdoor%20adventure!5e0!3m2!1sid!2sid!4v1687042401579!5m2!1sid!2sid" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 </p>
