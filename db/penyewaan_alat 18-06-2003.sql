@@ -179,7 +179,6 @@ CREATE TABLE `master_pelanggan` (
 --
 
 INSERT INTO `master_pelanggan` (`id`, `nama`, `hp`, `email`, `alamat`, `username`, `password`, `status`) VALUES
-(2, 'Ahmad', '6285748496135', 'hudamiftakh8@gmail.com', 'Jombang jawa timur', 'huda', '202cb962ac59075b964b07152d234b70', ''),
 (3, 'Umam', '6285712551156', 'ulin@gmail.com', 'Alamat 2', 'ulin', '81dc9bdb52d04dc20036dbd8313ed055', ''),
 (4, 'Zeaid', '62847758857676', 'email1@gmail.com', 'Alamat Jombang', 'user1', '202cb962ac59075b964b07152d234b70', ''),
 (5, 'Yaqin', '6287866163545', 'email@gmail.com', 'Jombang', 'user2', '202cb962ac59075b964b07152d234b70', '');
