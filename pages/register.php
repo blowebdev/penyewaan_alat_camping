@@ -86,7 +86,7 @@
                                           $result = file_get_contents( $url, false, $context );
                                           $response = json_decode( $result);
 
-                                          if($response){
+                                          if($exc){
                                                 echo '
                                                 <div class="alert alert-success alert-dismissible" role="alert">
                                                 <div class="alert-message">
