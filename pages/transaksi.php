@@ -1,7 +1,7 @@
 <?php 
 if (!in_array($_SESSION['level'], array('1','2'))) {
-echo  "<br>Maaf halaman tidak bisa di akses";
-exit;
+	echo  "<br>Maaf halaman tidak bisa di akses";
+	exit;
 }
 ?>
 <div class="row">
@@ -93,64 +93,72 @@ if (isset($_REQUEST['update_lunas'])) {
 										<td>Rp. <?php echo number_format($data['biaya_kirim']); ?></td>
 										<td nowrap="" style="font-weight: bold;">Rp. <?php echo number_format($data['grand_total']); ?></td>
 										<td><?php echo status($data['status']); ?></td>
-										<td><?php echo (empty($data['bank'])) ? "<p class='text-danger'>BELUM UPLOAD</p>": "<p class='text-success'>SUDAH</p>"; ?></td>
-										<td nowrap="">
-											<?php if(in_array($_SESSION['level'], array('1'))) : ?>
-												<div class="btn-group dropdown">
-													<a href="javascript: void(0);" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<form action="" method="POST">
-															<input type="hidden" name="id" value="<?php echo $data['id']; ?>">
-															<input type="hidden" name="status" value="LUNAS">
-															<button class="dropdown-item" type="submit" name="update_lunas"><i class="mdi mdi-check-all mr-2 text-muted font-18 vertical-middle"></i> Lunas</button>
-														</form>
-														<form action="" method="POST">
-															<input type="hidden" name="id" value="<?php echo $data['id']; ?>">
-															<input type="hidden" name="status" value="BATAL">
-															<button class="dropdown-item" type="submit" name="update_lunas"><i class="fe-rotate-ccw mr-2 text-muted font-18 vertical-middle"></i> Batalkan</button>
-														</form>
-														<a href="<?php echo $base_url; ?>show_detail_transaksi/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class="fa fa-eye mr-2 text-muted font-18 vertical-middle"></i> Invoice</a>
-
-														<a href="<?php echo $base_url; ?>item_harus_dikembalikan/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class="fe-shopping-bag mr-2 text-muted font-18 vertical-middle"></i> Detail Barang</a>
-
-														<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>/<?php echo $data['id_pelanggan']; ?>" class="dropdown-item" type="submit"><i class="fe-slack mr-2 text-muted font-18 vertical-middle"></i>Review</a>
-
-														<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class=" ti-back-right mr-2 text-muted font-18 vertical-middle"></i> Struk Pembayaran</a>
-														
-													</div>
-												</div>
+										<td>
+											<?php if($detail_transaksi['pembayaran']=='transfer') : ?>
+												<?php echo (empty($data['bank'])) ? "<p class='text-danger'>BELUM UPLOAD</p>": "<p class='text-success'>SUDAH</p>"; ?>
 												<?php else : ?>
-												<?php if($data['status']=='LUNAS') : ?>
-													<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>" class="btn btn-warning btn-sm" title="Review"><i class="fa fa-star"></i></a>
-													<?php else : ?>
-													<a href="<?php echo $base_url; ?>show_detail_transaksi/<?php echo $data['kode_transaksi']; ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-													<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i></a>
-													<?php endif ?>
-												<?php endif; ?>
+													<p class='text-success'>CASH</p>
+												<?php endif;?>
 											</td>
-										</tr>
-										<?php 
-										$total_rp+=$data['grand_total'];
-										$pengiriman+=$data['biaya_kirim'];
-										$total_harga+=$data['total_transaksi'];
-										$total_barang+=$data['total_barang'];
-									} ?>
-								</tbody>
-								<tfoot class="table-light" style="background-color: #dfe6e9">
-									<tr>
-										<td colspan="4">Total Transaksi</td>
-										<td style="font-weight: bold;"></td>
-										<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_harga); ?></td>
-										<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($pengiriman); ?></td>
-										<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_rp); ?></td>
-										<td></td>
-										<td></td>
-									</tr>
-								</tfoot>
-							</table>
+											<td nowrap="">
+												<?php if(in_array($_SESSION['level'], array('1'))) : ?>
+													<div class="btn-group dropdown">
+														<a href="javascript: void(0);" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+														<div class="dropdown-menu dropdown-menu-right">
+															<form action="" method="POST">
+																<input type="hidden" name="id" value="<?php echo $data['id']; ?>">
+																<input type="hidden" name="status" value="LUNAS">
+																<button class="dropdown-item" type="submit" name="update_lunas"><i class="mdi mdi-check-all mr-2 text-muted font-18 vertical-middle"></i> Lunas</button>
+															</form>
+															<form action="" method="POST">
+																<input type="hidden" name="id" value="<?php echo $data['id']; ?>">
+																<input type="hidden" name="status" value="BATAL">
+																<button class="dropdown-item" type="submit" name="update_lunas"><i class="fe-rotate-ccw mr-2 text-muted font-18 vertical-middle"></i> Batalkan</button>
+															</form>
+															<a href="<?php echo $base_url; ?>show_detail_transaksi/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class="fa fa-eye mr-2 text-muted font-18 vertical-middle"></i> Invoice</a>
+
+															<a href="<?php echo $base_url; ?>item_harus_dikembalikan/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class="fe-shopping-bag mr-2 text-muted font-18 vertical-middle"></i> Detail Barang</a>
+
+															<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>/<?php echo $data['id_pelanggan']; ?>" class="dropdown-item" type="submit"><i class="fe-slack mr-2 text-muted font-18 vertical-middle"></i>Review</a>
+
+															<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class=" ti-back-right mr-2 text-muted font-18 vertical-middle"></i> Struk Pembayaran</a>
+															
+														</div>
+													</div>
+													<?php else : ?>
+														<?php if($data['status']=='LUNAS') : ?>
+															<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>" class="btn btn-warning btn-sm" title="Review"><i class="fa fa-star"></i></a>
+															<?php else : ?>
+																<a href="<?php echo $base_url; ?>show_detail_transaksi/<?php echo $data['kode_transaksi']; ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+																<?php if($detail_transaksi['pembayaran']=='transfer') : ?>
+																	<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i></a>
+																<?php endif; ?>
+															<?php endif ?>
+														<?php endif; ?>
+													</td>
+												</tr>
+												<?php 
+												$total_rp+=$data['grand_total'];
+												$pengiriman+=$data['biaya_kirim'];
+												$total_harga+=$data['total_transaksi'];
+												$total_barang+=$data['total_barang'];
+											} ?>
+										</tbody>
+										<tfoot class="table-light" style="background-color: #dfe6e9">
+											<tr>
+												<td colspan="4">Total Transaksi</td>
+												<td style="font-weight: bold;"></td>
+												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_harga); ?></td>
+												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($pengiriman); ?></td>
+												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_rp); ?></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>

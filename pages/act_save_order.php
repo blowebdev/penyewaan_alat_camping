@@ -70,7 +70,8 @@ if ($simpan) {
 		`durasi`,
 		`total_harga`,
 		`total`,
-		`create_at`) VALUES (
+		`create_at`,
+		`status`) VALUES (
 		'".$kode_transaksi."',
 		'".$data['id_produk']."',
 		'".$id_pelanggan."',
@@ -81,7 +82,7 @@ if ($simpan) {
 		'".$data['total_hari']."',
 		'".$data['total']."',
 		'".$data['total']*$data['total_hari']."',
-		'".date('Y-m-d H:i:s')."')
+		'".date('Y-m-d H:i:s')."','PROSES')
 		";
 		$simpan_detail = mysqli_query($conn,$sql);
 

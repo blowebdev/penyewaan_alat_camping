@@ -30,13 +30,9 @@
                                 <div class="p-3">
                                     <img src="<?php echo $base_url."upload/".$dapod['gambar']; ?>" alt="product-pic" class="img-fluid"  height="100" width="40%"/>
                                 </div>
-                                <div class="product-action">
-                                    
-                                </div>
                             </div>
 
                             <div class="product-info border-top p-3">
-
                                 <div>
                                     <h5 class="font-16 mt-0 mb-1"><a href="<?php echo $base_url; ?>detail/<?php echo $dapod['id']; ?>" class="text-dark"><?php echo $dapod['nama']; ?></a> </h5>
                                     <p class="text-muted">
@@ -44,6 +40,7 @@
                                             echo '<i class="mdi mdi-star text-warning"></i>';
                                         }?> (<?php echo number_format($review_bintan['jawaban'],2); ?>)
                                     </p>
+                                    
                                     <h4 class="m-0"> <span class="text-muted"> Harga : Rp.<?php echo number_format($dapod['harga']); ?> /Hari</span></h4>
                                 </div>
                                 <br>

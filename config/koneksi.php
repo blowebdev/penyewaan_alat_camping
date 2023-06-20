@@ -5,6 +5,7 @@ $username="root";
 $password="";
 $db="penyewaan_alat";
 $conn = mysqli_connect($server,$username,$password,$db);
+$base_url = "http://localhost/penyewaan_alat_camping/";
 
 function hari_tanggal($waktu)
 {
@@ -91,5 +92,4 @@ function status($txt){
     }
 }
 
-$base_url = "http://localhost/penyewaan_alat_camping/";
 ?>

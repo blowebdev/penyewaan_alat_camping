@@ -173,10 +173,13 @@ $detail_transaksi = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_
                                 <br>
                                 <div class="alert alert-danger">
                                     <label style="font-weight: bold;">Informasi !</label>
+                                    <?php if($detail_transaksi['pembayaran']=='transfer') : ?>
                                     <br>
                                     Transaksi hanya dapat dilakukan menggunakan rekening Bank BCA. Kami tidak menerima pembayaran tunai atau metode pembayaran lainnya. Harap pastikan Anda memiliki rekening Bank BCA yang valid untuk melanjutkan transaksi.
-
                                     <a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $detail_transaksi['kode_transaksi']; ?>" class="btn btn-danger">Upload Struk pembayaran</a>
+                                    <?php else : ?>
+                                        Anda tidak perlu upload struk pembayaran, karena metode yang anda gunakan adalah cash
+                                <?php endif; ?>
                                 </div>
                             </div>
                         </div>

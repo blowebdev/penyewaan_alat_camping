@@ -19,6 +19,12 @@
 			while ($dapod = mysqli_fetch_array($product)) {
 				$result = mysqli_query($conn,"SELECT SUM(CAST(jawaban AS DOUBLE) /5) as jawaban FROM `master_isian_review` WHERE id_produk = '".$dapod['id']."'");
 				$review_bintan = mysqli_fetch_array($result);
+
+
+				$total_stock_res = mysqli_query($conn,"SELECT SUM(qty) as stock FROM master_detail_transaksi WHERE id_produk='".$dapod['id']."' AND status='PROSES'");
+				$total_stock = mysqli_fetch_array($total_stock_res);
+				$stock =  $dapod['stock'];
+				$stock_akhir = number_format($stock-$total_stock['stock']);
 			?>
 				<div class="col-md-6 col-xl-3">
 					<div class="card product-box">
@@ -28,8 +34,12 @@
 							</div>
 							<div class="product-action">
 								<div class="d-flex">
+									<?php if($stock_akhir<=0) :  ?>
+										<button class="btn btn-default d-block w-100 action-btn m-2">Maaf stock</button>
+									<?php else : ?>
 									<a href="javascript: void(0);" onclick="keranjang_belanja('<?php echo $dapod['id']; ?>', '<?php echo $dapod['harga']; ?>')" class="btn btn-danger d-block w-100 action-btn m-2">
 										<i class="ti-shopping-cart"></i> Keranjang</a>
+									<?php endif; ?>
 									</div>
 								</div>
 							</div>
@@ -39,6 +49,7 @@
 								<div>
 									<h5 class="font-16 mt-0 mb-1"><a href="<?php echo $base_url; ?>detail/<?php echo $dapod['id']; ?>" class="text-dark"><?php echo $dapod['nama']; ?></a> </h5>
 									<p class="text-muted">
+										Stock Tersisa : <?php echo $stock_akhir; ?> Item <br>
 											<?php for ($i=1; $i <=number_format($review_bintan['jawaban'],2) ; $i++) { 
 												echo '<i class="mdi mdi-star text-warning"></i>';
 											}?> (<?php echo number_format($review_bintan['jawaban'],2); ?>)
