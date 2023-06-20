@@ -35,9 +35,9 @@
 							<div class="product-action">
 								<div class="d-flex">
 									<?php if($stock_akhir<=0) :  ?>
-										<button class="btn btn-default d-block w-100 action-btn m-2">Maaf stock</button>
+										<button onclick="alert('Maaf stock habis')" class="btn btn-danger d-block w-100 action-btn m-2">Maaf stock Habis</button>
 									<?php else : ?>
-									<a href="javascript: void(0);" onclick="keranjang_belanja('<?php echo $dapod['id']; ?>', '<?php echo $dapod['harga']; ?>')" class="btn btn-danger d-block w-100 action-btn m-2">
+									<a href="javascript: void(0);" onclick="keranjang_belanja('<?php echo $dapod['id']; ?>', '<?php echo $dapod['harga']; ?>')" class="btn btn-primary d-block w-100 action-btn m-2">
 										<i class="ti-shopping-cart"></i> Keranjang</a>
 									<?php endif; ?>
 									</div>

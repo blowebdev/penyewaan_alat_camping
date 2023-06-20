@@ -57,6 +57,7 @@ if (isset($_REQUEST['hapus'])) {
 									<th width="10%">Produk</th>
 									<th width="10%">Harga</th>
 									<th width="10%">Stock</th>
+									<th width="10%">Sisa Stock</th>
 									<th width="30%">Deskripsi</th>
 									<th width="1%" nowrap="">Aksi</th>
 								</tr>
@@ -65,6 +66,11 @@ if (isset($_REQUEST['hapus'])) {
 								<?php 
 								$wxc = mysqli_query($conn,"SELECT * FROM master_produk ORDER BY nama ASC");
 								while ($data = mysqli_fetch_array($wxc)) {
+
+									$total_stock_res = mysqli_query($conn,"SELECT SUM(qty) as stock FROM master_detail_transaksi WHERE id_produk='".$data['id']."' AND status='PROSES'");
+									$total_stock = mysqli_fetch_array($total_stock_res);
+									$stock =  $data['stock'];
+									$stock_akhir = number_format($stock-$total_stock['stock']);
 									?>
 									<tr>
 										<td><?php echo $data['id']; ?></td>
@@ -72,6 +78,9 @@ if (isset($_REQUEST['hapus'])) {
 										<td style="font-weight: bold;"><?php echo $data['nama']; ?></td>
 										<td>Rp. <?php echo number_format($data['harga']); ?></td>
 										<td><?php echo $data['stock']; ?></td>
+										<td>
+											<?php echo $stock_akhir; ?>
+										</td>
 										<td><?php echo $data['deskripsi']; ?></td>
 										<td nowrap="">
 											<form action="" method="POST">
