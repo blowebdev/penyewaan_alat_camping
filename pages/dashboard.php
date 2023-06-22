@@ -126,7 +126,7 @@ var chart = new CanvasJS.Chart("chart", {
     theme: "light2",
     animationEnabled: true,
     title: {
-        text: "Penjualan Per Bulan"
+        text: "Penyewaan Per Bulan"
     },
     axisY: {
         title: "Total sewa barang"
