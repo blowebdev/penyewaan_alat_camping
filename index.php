@@ -36,6 +36,7 @@ session_start();
 	<link href="<?php echo $base_url; ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $base_url; ?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $base_url; ?>assets/css/app.min.css" rel="stylesheet" type="text/css" />
+	<script src="<?php echo $base_url; ?>chart/canvasjs.min.js"></script>
 
 	<style type="text/css">
 		.tasklist li.task-low{border-left-color:#1abc9c}.tasklist li.task-high{border-left-color:#f1556c}.tasklist .checkbox{margin-left:20px;margin-top:5px}.task-placeholder{border:1px dashed #dee2e6!important;background-color:#f1f5f7!important;padding:20px}.product-box{position:relative}.product-box .product-img{position:relative;overflow:hidden}.product-box .product-action{position:absolute;left:0;bottom:0;width:100%;transform:translateY(52px);transition:all .4s}.product-box:hover .product-action{transform:translateY(0)}.product-detail-carousel .product-nav-img{display:block;background-color:#f1f5f7}.product-detail-carousel .product-carousel-indicators{position:relative}.product-detail-carousel .product-carousel-indicators li{width:auto;height:auto;min-width:80px;margin:0 7px;padding:4px;border:1px solid #dee2e6;border-radius:4px}.product-thumb{padding:3px;margin-top:3px}.product-thumb.active{background-color:#6c757d!important}.track-order-list ul li{position:relative;border-left:2px solid #dee2e6;padding:0 0 14px 21px}.track-order-list ul li:first-child{padding-top:0}.track-order-list ul li:last-child{padding-bottom:0}.track-order-list ul li:before{content:"";position:absolute;left:-7px;top:0;height:12px;width:12px;background-color:#3bafda;border-radius:50%;border:3px solid #fff}.track-order-list ul li.completed{border-color:#3bafda}.track-order-list ul li .active-dot.dot{top:-9px;left:-16px;border-color:#3bafda}
@@ -157,9 +158,17 @@ session_start();
 							<li class="has-submenu">
 								<a href="<?php echo $base_url; ?>home"><i class="fa fa-home"></i>Home </a>
 							</li>
-							<li class="has-submenu">
-								<a href="<?php echo $base_url; ?>faq"><i class="fe-command"></i>FAQ </a>
-							</li>
+							<?php if(empty($_SESSION['level'])) : ?>
+								<li class="has-submenu">
+									<a href="<?php echo $base_url; ?>produk"><i class="fe-maximize"></i> Produk </a>
+								</li>
+								<li class="has-submenu">
+									<a href="<?php echo $base_url; ?>pencarian_tanggal"><i class="fe-shopping-bag"></i> Sewa </a>
+								</li>
+								<li class="has-submenu">
+									<a href="<?php echo $base_url; ?>faq"><i class="fe-command"></i>FAQ </a>
+								</li>
+							<?php endif; ?>
 							<?php if(in_array($_SESSION['level'], array('1'))) : ?>
 								<li class="has-submenu">
 									<a href="#"><i class="fa fa-database"></i> Master <div class="arrow-down"></div></a>
@@ -269,7 +278,7 @@ session_start();
 			<!-- ============================================================== -->
 
 			<!-- Footer Start -->
-			<footer class="footer">
+			<!-- <footer class="footer">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-6">
@@ -278,7 +287,7 @@ session_start();
 
 					</div>
 				</div>
-			</footer>
+			</footer> -->
 			<!-- end Footer -->
 
 			<!-- Right bar overlay-->

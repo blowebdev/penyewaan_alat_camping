@@ -66,6 +66,41 @@
             <div class="clearfix"></div>
         </div>
     </div>
+
+     <div class="col-xl-3 col-md-6">
+        <?php $dipinjam = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(qty) as total FROM master_detail_transaksi WHERE status='PROSES'")); ?>
+        <div class="widget-bg-color-icon card-box">
+            <div class="avatar-lg rounded-circle bg-icon-purple float-left">
+                <i class="fe-truck font-24 avatar-title text-white"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark mt-1"><?php echo number_format($dipinjam['total']); ?> Item</h3>
+                <p class="text-muted mb-0">Total barang dipinjam</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <?php $harus_kembali = mysqli_fetch_array(mysqli_query($conn,"
+             SELECT SUM(v.qty) as total FROM (
+             SELECT  a.id as id_detail, a.qty,  DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                    IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up,
+                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
+                                    FROM `master_detail_transaksi` as a 
+                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
+            ) as v WHERE v.status='Perlu dikembalikan' 
+        ")); ?>
+        <div class="widget-bg-color-icon card-box">
+            <div class="avatar-lg rounded-circle bg-icon-purple float-left">
+                <i class="fe-truck font-24 avatar-title text-white"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark mt-1"><?php echo number_format($harus_kembali['total']); ?> Item</h3>
+                <p class="text-muted mb-0">Total barang harus kembali</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
 </div>
 <!-- end row -->
 <div class="card-box ribbon-box">
@@ -75,3 +110,32 @@
         <div id="chart"></div>
     </div>
 </div>
+
+
+
+<script type="text/javascript">
+<?php 
+   $pemesanan = mysqli_query($conn,"SELECT DATE_FORMAT(created_at, '%Y-%m') AS bulan, COUNT(*) AS jumlah_pemesanan FROM master_transaksi GROUP BY bulan;");
+   $dataPoints = array();
+           while ($row = mysqli_fetch_array($pemesanan)) {
+            $dataPoints[] = array("label" => $row["bulan"], "y" => $row["jumlah_pemesanan"]);
+        }
+?>
+var dataPoints = <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>;
+var chart = new CanvasJS.Chart("chart", {
+    theme: "light2",
+    animationEnabled: true,
+    title: {
+        text: "Penjualan Per Bulan"
+    },
+    axisY: {
+        title: "Total sewa barang"
+    },
+    data: [{
+        type: "line",
+        dataPoints: dataPoints
+    }]
+});
+
+chart.render();
+</script>

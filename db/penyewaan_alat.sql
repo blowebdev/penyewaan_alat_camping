@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Jun 2023 pada 14.48
+-- Waktu pembuatan: 22 Jun 2023 pada 08.09
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -50,20 +50,7 @@ CREATE TABLE `master_detail_transaksi` (
 --
 
 INSERT INTO `master_detail_transaksi` (`id`, `kode_transaksi`, `id_produk`, `id_pelanggan`, `harga`, `qty`, `tgl_pinjam`, `tgl_selesai`, `durasi`, `total_harga`, `total`, `create_at`, `status`, `review`, `denda`) VALUES
-(5, 'TRX16987228', 5, 2, 40000, 1, '2023-05-24 12:00:00', '2023-05-27 11:00:00', 3, 40000, 120000, '2023-05-24 06:20:55', 'SUDAH', '', 110000),
-(6, 'TRX16987228', 3, 2, 100000, 1, '2023-05-24 12:00:00', '2023-05-27 11:00:00', 3, 100000, 300000, '2023-05-24 06:20:55', 'SUDAH', '', 0),
-(7, 'TRX16987228', 2, 2, 75000, 1, '2023-05-24 12:00:00', '2023-05-27 11:00:00', 3, 75000, 225000, '2023-05-24 06:20:55', '', '', 0),
-(8, 'TRX15F40C06', 5, 4, 40000, 1, '2023-05-24 14:00:00', '2023-05-25 13:00:00', 1, 40000, 40000, '2023-05-24 08:40:46', 'SUDAH', '', 120000),
-(9, 'TRX15F40C06', 2, 4, 75000, 1, '2023-05-24 14:00:00', '2023-05-25 13:00:00', 1, 75000, 75000, '2023-05-24 08:40:46', '', '', 0),
-(10, 'TRX15F40C06', 1, 4, 50000, 1, '2023-05-24 14:00:00', '2023-05-25 13:00:00', 1, 50000, 50000, '2023-05-24 08:40:46', '', '', 0),
-(11, 'TRX8D1B99B8', 5, 4, 40000, 1, '2023-05-24 15:00:00', '2023-05-27 14:00:00', 3, 40000, 120000, '2023-05-24 09:58:35', '', 'Ini Review', 0),
-(17, 'TRX47F83E30', 3, 2, 100000, 1, '2023-05-26 14:00:00', '2023-05-27 13:00:00', 1, 100000, 100000, '2023-05-26 08:01:42', '', '', 0),
-(18, 'TRX47F83E30', 2, 2, 75000, 1, '2023-05-26 14:00:00', '2023-05-27 13:00:00', 1, 75000, 75000, '2023-05-26 08:01:43', '', '', 0),
-(19, 'TRX47F83E30', 1, 2, 50000, 1, '2023-05-26 14:00:00', '2023-05-27 13:00:00', 1, 50000, 50000, '2023-05-26 08:01:43', '', '', 0),
-(20, 'TRXDFD08452', 1, 5, 50000, 3, '2023-05-28 17:00:00', '2023-05-29 16:00:00', 1, 150000, 150000, '2023-05-28 11:26:37', '', '', 0),
-(21, 'TRXDFD08452', 2, 5, 75000, 1, '2023-05-28 17:00:00', '2023-05-29 16:00:00', 1, 75000, 75000, '2023-05-28 11:26:37', '', '', 0),
-(22, 'TRX1B6A25FE', 5, 4, 40000, 1, '2023-05-28 17:00:00', '2023-05-29 16:00:00', 1, 40000, 40000, '2023-06-18 14:21:57', '', '', 0),
-(23, 'TRX1B6A25FE', 3, 4, 100000, 1, '2023-06-18 20:00:00', '2023-06-22 19:00:00', 4, 100000, 400000, '2023-06-18 14:21:57', '', '', 0);
+(25, 'TRX5F5E9FCA', 1, 4, 50000, 10, '2023-06-18 00:00:00', '2023-06-19 08:00:00', 1, 100000, 100000, '2023-06-20 03:14:13', 'PROSES', '', 0);
 
 -- --------------------------------------------------------
 
@@ -175,7 +162,9 @@ CREATE TABLE `master_pelanggan` (
 
 INSERT INTO `master_pelanggan` (`id`, `nama`, `hp`, `email`, `alamat`, `username`, `password`, `status`) VALUES
 (4, 'Zeaid', '62847758857676', 'email1@gmail.com', 'Alamat Jombang', 'user1', '202cb962ac59075b964b07152d234b70', ''),
-(5, 'Yaqin', '6287866163545', 'email@gmail.com', 'Jombang', 'user2', '202cb962ac59075b964b07152d234b70', '');
+(5, 'Yaqin', '6287866163545', 'email@gmail.com', 'Jombang', 'user2', '202cb962ac59075b964b07152d234b70', ''),
+(6, 'nama', '628488586', 'email@gmail.com', 'kskksjsj', 'yaqin', '202cb962ac59075b964b07152d234b70', ''),
+(7, 'Muhammad Ali', '62599699797', 'email@gmail.com', 'ALAMAT', 'ahmad', '202cb962ac59075b964b07152d234b70', '');
 
 -- --------------------------------------------------------
 
@@ -229,6 +218,21 @@ INSERT INTO `master_produk` (`id`, `nama`, `harga`, `gambar`, `deskripsi`, `stoc
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `master_tracking_pengiriman`
+--
+
+CREATE TABLE `master_tracking_pengiriman` (
+  `id` int(11) NOT NULL,
+  `status` text NOT NULL,
+  `catatan` int(11) NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `kode_transaksi` text NOT NULL,
+  `nm_pengirim` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `master_transaksi`
 --
 
@@ -257,12 +261,7 @@ CREATE TABLE `master_transaksi` (
 --
 
 INSERT INTO `master_transaksi` (`id`, `id_pelanggan`, `kode_transaksi`, `total_barang`, `total_transaksi`, `nama`, `hp`, `alamat`, `pengiriman`, `catatan`, `biaya_kirim`, `grand_total`, `pembayaran`, `created_at`, `status`, `bank`, `struk`) VALUES
-(3, 2, 'TRX16987228', 3, 645000, 'Ahamad', '6285748496135', 'Jombang jawa timur', 'dikirim', 'Mohon dikirim', 50000, 695000, 'cash', '2023-05-24 06:20:55', 'PROSES', '', ''),
-(4, 4, 'TRX15F40C06', 3, 165000, 'Aha', '62847758857676', 'Alamat Jombang', 'dikirim', 'Ok', 50000, 215000, 'transfer', '2023-05-24 08:40:45', 'LUNAS', 'BRI', '-kos-kosan-wisma-rosa-544356595.jpg'),
-(8, 4, 'TRX8D1B99B8', 1, 120000, 'Zein saedi', '62847758857676', 'Alamat Jombang', 'ambil_sendiri', 'OK', 0, 120000, 'transfer', '2023-05-24 09:58:35', 'PROSES', '', ''),
-(9, 2, 'TRX47F83E30', 3, 225000, 'Miftahul Huda', '6285748496135', 'Jombang jawa timur', 'dikirim', 'Ok', 50000, 275000, 'transfer', '2023-05-26 08:01:42', 'PROSES', '', ''),
-(10, 5, 'TRXDFD08452', 2, 125000, 'Yaqin', '6287866163545', 'Jombang', 'dikirim', 'Mohon verifikasi', 50000, 175000, 'cash', '2023-05-28 11:26:37', 'PROSES', '', ''),
-(11, 4, 'TRX1B6A25FE', 2, 440000, 'Zeaid', '62847758857676', 'Alamat Jombang', 'dikirim', 'ok', 50000, 490000, 'transfer', '2023-06-18 14:21:57', 'LUNAS', 'BRI', '-gambar 1.jpg');
+(13, 4, 'TRX5F5E9FCA', 1, 100000, 'Zeaid', '62847758857676', 'Alamat Jombang', 'dikirim', 'Ok', 50000, 150000, 'cash', '2023-06-20 03:14:12', 'LUNAS', '', '');
 
 -- --------------------------------------------------------
 
@@ -332,6 +331,12 @@ ALTER TABLE `master_produk`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `master_tracking_pengiriman`
+--
+ALTER TABLE `master_tracking_pengiriman`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `master_transaksi`
 --
 ALTER TABLE `master_transaksi`
@@ -351,7 +356,7 @@ ALTER TABLE `master_user`
 -- AUTO_INCREMENT untuk tabel `master_detail_transaksi`
 --
 ALTER TABLE `master_detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `master_isian_review`
@@ -363,7 +368,7 @@ ALTER TABLE `master_isian_review`
 -- AUTO_INCREMENT untuk tabel `master_keranjang_belanja`
 --
 ALTER TABLE `master_keranjang_belanja`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT untuk tabel `master_nilai_rekomendasi_review`
@@ -375,7 +380,7 @@ ALTER TABLE `master_nilai_rekomendasi_review`
 -- AUTO_INCREMENT untuk tabel `master_pelanggan`
 --
 ALTER TABLE `master_pelanggan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `master_pertanyaan_review`
@@ -390,10 +395,16 @@ ALTER TABLE `master_produk`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT untuk tabel `master_tracking_pengiriman`
+--
+ALTER TABLE `master_tracking_pengiriman`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `master_transaksi`
 --
 ALTER TABLE `master_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

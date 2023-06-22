@@ -122,6 +122,8 @@ if (isset($_REQUEST['update_lunas'])) {
 															<a href="<?php echo $base_url; ?>review/<?php echo $data['kode_transaksi']; ?>/<?php echo $data['id_pelanggan']; ?>" class="dropdown-item" type="submit"><i class="fe-slack mr-2 text-muted font-18 vertical-middle"></i>Review</a>
 
 															<a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class=" ti-back-right mr-2 text-muted font-18 vertical-middle"></i> Struk Pembayaran</a>
+
+															<a href="<?php echo $base_url; ?>pengiriman/<?php echo $data['kode_transaksi']; ?>" class="dropdown-item" type="submit"><i class="fe-truck mr-2 text-muted font-18 vertical-middle"></i> Pengiriman</a>
 															
 														</div>
 													</div>
@@ -135,6 +137,7 @@ if (isset($_REQUEST['update_lunas'])) {
 																<?php endif; ?>
 															<?php endif ?>
 														<?php endif; ?>
+														<a href="<?php echo $base_url; ?>pengiriman/<?php echo $data['kode_transaksi']; ?>" class="btn btn-success btn-sm" title="Tracking pengiriman"><i class="fe-truck"></i></a>
 													</td>
 												</tr>
 												<?php 
