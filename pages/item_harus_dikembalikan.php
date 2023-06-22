@@ -173,7 +173,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                         if($data['status_up']=='SUDAH'){
                                            echo '<span class="badge badge-success p-1">SUDAH</span>';
                                        }else if($data['status_up']=='SUDAH CUSTOMER'){
-                                           echo '<span class="badge badge-success p-1">SUDAH DIKEMBALIKAN CUSTOMER</span>';
+                                           echo '<span class="badge badge-warning p-1">SUDAH DIKEMBALIKAN CUSTOMER</span>';
                                        }
                                        else{
                                            echo ($data['sisa_hari']>=1) ? '<span class="badge badge-danger p-1">Perlu Dikembali</span>': '<span class="badge badge-warning p-1">Proses</span>';
