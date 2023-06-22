@@ -41,8 +41,8 @@
                         <h3 class="text-warning">
                             <?php 
                             $total_proses = mysqli_num_rows(mysqli_query($conn,"
-                               SELECT o.* FROM ( SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o WHERE o.status='Proses' AND o.status_up<>'SUDAH';
-                                "));
+                             SELECT o.* FROM ( SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o WHERE o.status='Proses' AND o.status_up<>'SUDAH';
+                             "));
 
                             echo number_format($total_proses);
                             ?>
@@ -54,31 +54,31 @@
                     <div class="py-1">
                         <i class="fe-shield font-24"></i>
                         <h3 class="text-success">
-                           <?php 
-                           $total_kembali = mysqli_num_rows(mysqli_query($conn,"
-                             SELECT o.* FROM (
-                             SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o
-                             WHERE o.status='Perlu dikembalikan' AND o.status_up<>'SUDAH'
-                             "));
+                         <?php 
+                         $total_kembali = mysqli_num_rows(mysqli_query($conn,"
+                           SELECT o.* FROM (
+                           SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o
+                           WHERE o.status='Perlu dikembalikan' AND o.status_up<>'SUDAH'
+                           "));
 
-                           echo number_format($total_kembali);
-                           ?>
-                       </h3>
-                       <p class="text-uppercase mb-1 font-13 fw-medium">Perlu kembali</p>
-                   </div>
-               </div>
-               <div class="col-md-6 col-xl-3">
+                         echo number_format($total_kembali);
+                         ?>
+                     </h3>
+                     <p class="text-uppercase mb-1 font-13 fw-medium">Perlu kembali</p>
+                 </div>
+             </div>
+             <div class="col-md-6 col-xl-3">
                 <div class="py-1">
                     <i class="fe-dollar-sign font-24"></i>
                     <h3 class="text-danger">
                         <?php 
-                           $tot = mysqli_num_rows(mysqli_query($conn,"
-                             SELECT o.* FROM (
-                             SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o
-                             "));
+                        $tot = mysqli_num_rows(mysqli_query($conn,"
+                           SELECT o.* FROM (
+                           SELECT a.id as id_detail, DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari, IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up FROM `master_detail_transaksi` as a LEFT JOIN master_produk as b ON a.id_produk = b.id ) AS o
+                           "));
 
-                           echo number_format($tot);
-                           ?>
+                        echo number_format($tot);
+                        ?>
                     </h3>
                     <p class="text-uppercase mb-1 font-13 fw-medium">Total Transaksi</p>
                 </div>
@@ -91,7 +91,7 @@
 <?php 
 if (isset($_REQUEST['update_lunas'])) {
     $id = $_REQUEST['id_detail'];
-    $update = mysqli_query($conn,"UPDATE master_detail_transaksi SET status='SUDAH', denda='".$_REQUEST['denda']."' WHERE id='".$id."'");
+    $update = mysqli_query($conn,"UPDATE master_detail_transaksi SET status='".$_REQUEST['status']."', denda='".$_REQUEST['denda']."' WHERE id='".$id."'");
     if ($update) {
         echo '
         <div class="alert alert-success alert-dismissible" role="alert">
@@ -171,14 +171,17 @@ if (isset($_REQUEST['update_lunas'])) {
                                         <td><?php echo ($data['sisa_hari']<=1) ? "" : number_format(5000*$data['sisa_hari']); ?></td>
                                         <td><?php 
                                         if($data['status_up']=='SUDAH'){
-                                         echo '<span class="badge badge-success p-1">SUDAH</span>';
-                                     }else{
-                                         echo ($data['sisa_hari']>=1) ? '<span class="badge badge-danger p-1">Perlu Dikembali</span>': '<span class="badge badge-warning p-1">Proses</span>';
-                                     }
+                                           echo '<span class="badge badge-success p-1">SUDAH</span>';
+                                       }else if($data['status_up']=='SUDAH CUSTOMER'){
+                                           echo '<span class="badge badge-success p-1">SUDAH DIKEMBALIKAN CUSTOMER</span>';
+                                       }
+                                       else{
+                                           echo ($data['sisa_hari']>=1) ? '<span class="badge badge-danger p-1">Perlu Dikembali</span>': '<span class="badge badge-warning p-1">Proses</span>';
+                                       }
 
-                                     ?></td>
+                                       ?></td>
 
-                                     <td nowrap="">
+                                       <td nowrap="">
                                         <?php if(in_array($_SESSION['level'], array('1'))) : ?>
                                             <?php if($data['sisa_hari']>=1): ?>
                                                 <div class="btn-group dropdown">
@@ -186,25 +189,40 @@ if (isset($_REQUEST['update_lunas'])) {
                                                     <div class="dropdown-menu dropdown-menu-right" style="padding: 12px">
                                                         <form action="" method="POST">
                                                             <label>Isi Denda Pengembalian
-                                                             <input type="number" value="<?php echo ($data['sisa_hari']<=1) ? 0 : 5000*$data['sisa_hari']; ?>" name="denda" class="form-control">
-                                                         </label>
-                                                         <input type="hidden" name="id_detail" value="<?php echo $data['id_detail']; ?>">
-                                                         <input type="hidden" name="status" value="SUDAH">
-                                                         <button class="dropdown-item" type="submit" class="btn btn-primary" name="update_lunas"><i class="mdi mdi-check-all mr-2 text-muted font-18 vertical-middle"></i> Sudah Kembali</button>
-                                                     </form>
-                                                 </div>
-                                             </div>
-                                         <?php endif; ?>
-                                     <?php endif; ?>
-                                 </td>
-                             </tr>
+                                                               <input type="number" value="<?php echo ($data['sisa_hari']<=1) ? 0 : 5000*$data['sisa_hari']; ?>" name="denda" class="form-control">
+                                                           </label>
+                                                           <input type="hidden" name="id_detail" value="<?php echo $data['id_detail']; ?>">
+                                                           <input type="hidden" name="status" value="SUDAH">
+                                                           <button class="dropdown-item" type="submit" class="btn btn-primary" name="update_lunas"><i class="mdi mdi-check-all mr-2 text-muted font-18 vertical-middle"></i> Konfirmasi</button>
+                                                       </form>
+                                                   </div>
+                                               </div>
+                                               <?php endif; ?>
 
-                         <?php } ?>
-                     </tbody>
-                 </table>
-             </div>
-         </div>
-     </div>
- </div>
-</div>
+                                               <?php else :  ?>
+                                                 <div class="btn-group dropdown">
+                                                    <a href="javascript: void(0);" class="dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right" style="padding: 12px">
+                                                        <form action="" method="POST">
+                                                            <label>Isi Denda Pengembalian
+                                                               <input type="number" readonly="" value="<?php echo ($data['sisa_hari']<=1) ? 0 : 5000*$data['sisa_hari']; ?>" name="denda" class="form-control">
+                                                           </label>
+                                                           <input type="hidden" name="id_detail" value="<?php echo $data['id_detail']; ?>">
+                                                           <input type="hidden" name="status" value="SUDAH CUSTOMER">
+                                                           <button class="dropdown-item" type="submit" class="btn btn-danger" name="update_lunas"><i class="mdi mdi-check-all mr-2 text-muted font-18 vertical-middle"></i> Set Sudah Kembali</button>
+                                                       </form>
+                                                   </div>
+                                               </div>
+                                           <?php endif; ?>
+                                       </td>
+                                   </tr>
+
+                               <?php } ?>
+                           </tbody>
+                       </table>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
 </div>
