@@ -19,7 +19,7 @@
             </div>
             <?php $jml_produk = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM master_produk")); ?>
             <div class="text-right">
-                <h3 class="text-dark mt-1"><span class="counter"><?php echo number_format($jml_produk); ?></span></h3>
+                <h3 class="text-dark mt-1"><span class="counter"><a href="<?php echo $base_url; ?>produk_list"><?php echo number_format($jml_produk); ?></a></span></h3>
                 <p class="text-muted mb-0">Produk</p>
             </div>
             <div class="clearfix"></div>
@@ -32,8 +32,8 @@
                 <i class="fe-users font-24 avatar-title text-white"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark mt-1"><span class="counter"><?php echo number_format($jml_pengguna); ?></span></h3>
-                <p class="text-muted mb-0">Pengguna</p>
+                <h3 class="text-dark mt-1"><span class="counter"><a href="<?php echo $base_url; ?>customer"><?php echo number_format($jml_pengguna); ?></a></span></h3>
+                <p class="text-muted mb-0">Pengguna / Customer</p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -44,11 +44,11 @@
         <?php $ongkir = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(biaya_kirim) as total FROM master_transaksi")); ?>
         <div class="widget-bg-color-icon card-box">
             <div class="avatar-lg rounded-circle bg-icon-danger float-left">
-                <i class="fe-gift font-24 avatar-title text-white"></i>
+                <i class="fe-dollar-sign font-24 avatar-title text-white"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark mt-1"><span class="counter">Rp. <?php echo number_format(($keuntungan['total']+$ongkir['total'])); ?></span></h3>
-                <p class="text-muted mb-0">Keuntungan</p>
+                <h3 class="text-dark mt-1"><span class="counter"><a href="<?php echo $base_url; ?>transaksi">Rp. <?php echo number_format(($keuntungan['total']+$ongkir['total'])); ?></a></span></h3>
+                <p class="text-muted mb-0">Keuntungan Sewa + Ongkir</p>
             </div>
             <div class="clearfix"></div>
         </div>
