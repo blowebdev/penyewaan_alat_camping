@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-
+<?php  if(empty($_REQUEST['id'])) : ?>
 <div class="card">
     <div class="card-body">
         <div class="text-center">
@@ -87,7 +87,7 @@
     </div>
 </div>
 </div>
-
+<?php endif; ?>
 <?php 
 if (isset($_REQUEST['update_lunas'])) {
     $id = $_REQUEST['id_detail'];
@@ -128,6 +128,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                     <th width="10%">Tanggal</th>
                                     <th width="10%">Kode Transaksi</th>
                                     <th width="10%">Barang</th>
+                                    <th width="10%">Qty</th>
                                     <th width="10%">Tanggal Sewa</th>
                                     <th width="10%">Tanggal Selesai</th>
                                     <th width="10%">Durasi</th>
@@ -149,21 +150,75 @@ if (isset($_REQUEST['update_lunas'])) {
                                         $q = "WHERE a.id_pelanggan='".$_SESSION['id_pelanggan']."' ";
                                     }
                                 }
-                                $trxsql = mysqli_query($conn,"
-                                    SELECT a.*, b.*, a.id as id_detail,  DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
-                                    IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up,
-                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
-                                    FROM `master_detail_transaksi` as a 
-                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                    ".$q."
-                                    ");
+
+                                if($_REQUEST['id']=='item_harus_kembali'){
+                                  $trxsql =mysqli_query($conn,"
+                                   SELECT v.*, SUM(v.qty) as total FROM (
+                                   SELECT 
+                                      a.create_at, 
+                                      a.kode_transaksi, 
+                                      b.nama,  
+                                      a.id as id_detail, 
+                                      a.qty,  
+                                      DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                   IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, 
+                                   a.status as status_up,
+                                   DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
+                                   FROM `master_detail_transaksi` as a 
+                                   LEFT JOIN master_produk as b ON a.id_produk = b.id
+                                   ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH' AND v.sisa_hari<>''");
+                                }elseif ($_REQUEST['id']=='item_sudah_kembali') {
+                                 $trxsql =mysqli_query($conn,"
+                                   SELECT v.*, SUM(v.qty) as total FROM (
+                                   SELECT 
+                                      a.create_at, 
+                                      a.kode_transaksi, 
+                                      b.nama,  
+                                      a.id as id_detail, 
+                                      a.qty,  
+                                      DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                   IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, 
+                                   a.status as status_up,
+                                   DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
+                                   FROM `master_detail_transaksi` as a 
+                                   LEFT JOIN master_produk as b ON a.id_produk = b.id
+                                   ) as v WHERE v.status_up='SUDAH' AND v.sisa_hari<>''");
+                                }elseif ($_REQUEST['id']=='total_barang_dipinjam') {
+                                   $trxsql =mysqli_query($conn,"
+                                   SELECT v.*, SUM(v.qty) as total FROM (
+                                   SELECT 
+                                      a.create_at, 
+                                      a.kode_transaksi, 
+                                      b.nama,  
+                                      a.id as id_detail, 
+                                      a.qty,  
+                                      DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                   IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, 
+                                   a.status as status_up,
+                                   DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
+                                   FROM `master_detail_transaksi` as a 
+                                   LEFT JOIN master_produk as b ON a.id_produk = b.id
+                                   ) as v");
+                                }else{
+                                  $trxsql = mysqli_query($conn,"
+                                      SELECT a.*, b.*, a.id as id_detail,  DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                      IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up,
+                                      DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
+                                      FROM `master_detail_transaksi` as a 
+                                      LEFT JOIN master_produk as b ON a.id_produk = b.id
+                                      ".$q."
+                                      ");
+                                }
+                                $total_qty =0;
                                 while ($data = mysqli_fetch_array($trxsql)) {
-                                    ?>
+                                if(!empty($data['kode_transaksi'])) :
+                                ?>
                                     <tr>
                                         <td width="1%"><?php echo $no++; ?></td>
                                         <td><?php echo $data['create_at']; ?></td>
                                         <td>#<?php echo $data['kode_transaksi']; ?></td>
                                         <td><?php echo $data['nama']; ?></td>
+                                        <td><?php echo "<b>".$data['qty']."</b>"; ?> Item</td>
                                         <td><?php echo hari_tanggal($data['tgl_pinjam']); ?></td>
                                         <td><?php echo hari_tanggal($data['tgl_selesai']); ?></td>
                                         <td><?php echo $data['total_hari']; ?> Hari</td>
@@ -216,8 +271,17 @@ if (isset($_REQUEST['update_lunas'])) {
                                            <?php endif; ?>
                                        </td>
                                    </tr>
-
-                               <?php } ?>
+                                 <?php endif; ?>
+                               <?php 
+                                $total_qty+=$data['qty'];
+                                } ?>
+                               <tfoot>
+                                 <tr>
+                                   <td colspan="4">Total item dipinjam</td>
+                                   <td style="font-weight: bold;"><?php echo $total_qty; ?> Item</td>
+                                   <td colspan="7"></td>
+                                 </tr>
+                               </tfoot>
                            </tbody>
                        </table>
                    </div>

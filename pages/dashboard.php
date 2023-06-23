@@ -41,40 +41,26 @@
 
     <div class="col-xl-3 col-md-6">
         <?php $keuntungan = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(grand_total) as total FROM master_transaksi")); ?>
+        <?php $ongkir = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(biaya_kirim) as total FROM master_transaksi")); ?>
         <div class="widget-bg-color-icon card-box">
             <div class="avatar-lg rounded-circle bg-icon-danger float-left">
                 <i class="fe-gift font-24 avatar-title text-white"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark mt-1"><span class="counter">Rp. <?php echo number_format($keuntungan['total']); ?></span></h3>
+                <h3 class="text-dark mt-1"><span class="counter">Rp. <?php echo number_format(($keuntungan['total']+$ongkir['total'])); ?></span></h3>
                 <p class="text-muted mb-0">Keuntungan</p>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
-
-    <div class="col-xl-3 col-md-6">
-        <?php $ongkir = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(biaya_kirim) as total FROM master_transaksi")); ?>
-        <div class="widget-bg-color-icon card-box">
-            <div class="avatar-lg rounded-circle bg-icon-purple float-left">
-                <i class="fe-truck font-24 avatar-title text-white"></i>
-            </div>
-            <div class="text-right">
-                <h3 class="text-dark mt-1">Rp. <?php echo number_format($ongkir['total']); ?></h3>
-                <p class="text-muted mb-0">Ongkir Terkumpul</p>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-
      <div class="col-xl-3 col-md-6">
-        <?php $dipinjam = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(qty) as total FROM master_detail_transaksi WHERE status='PROSES'")); ?>
+        <?php $dipinjam = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(qty) as total FROM master_detail_transaksi")); ?>
         <div class="widget-bg-color-icon card-box">
-            <div class="avatar-lg rounded-circle bg-icon-purple float-left">
-                <i class="fe-truck font-24 avatar-title text-white"></i>
+            <div class="avatar-lg rounded-circle bg-icon-success float-left">
+                <i class="fe-gift font-24 avatar-title text-white"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark mt-1"><?php echo number_format($dipinjam['total']); ?> Item</h3>
+                <h3 class="text-dark mt-1"><a href="<?php echo $base_url; ?>item_harus_dikembalikan/total_barang_dipinjam"><?php echo number_format($dipinjam['total']); ?> Item</a></h3>
                 <p class="text-muted mb-0">Total barang dipinjam</p>
             </div>
             <div class="clearfix"></div>
@@ -88,15 +74,36 @@
                                     DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
                                     FROM `master_detail_transaksi` as a 
                                     LEFT JOIN master_produk as b ON a.id_produk = b.id
-            ) as v WHERE v.status='Perlu dikembalikan' 
+            ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH'
         ")); ?>
         <div class="widget-bg-color-icon card-box">
             <div class="avatar-lg rounded-circle bg-icon-purple float-left">
                 <i class="fe-truck font-24 avatar-title text-white"></i>
             </div>
             <div class="text-right">
-                <h3 class="text-dark mt-1"><?php echo number_format($harus_kembali['total']); ?> Item</h3>
-                <p class="text-muted mb-0">Total barang harus kembali</p>
+                <h3 class="text-dark mt-1"><a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_harus_kembali"><?php echo number_format($harus_kembali['total']); ?> Item</h3></h3>
+                <p class="text-muted mb-0">Total belum kembali</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <?php $sudah_kembali = mysqli_fetch_array(mysqli_query($conn,"
+             SELECT SUM(v.qty) as total FROM (
+             SELECT  a.id as id_detail, a.qty,  DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                    IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, a.status as status_up,
+                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
+                                    FROM `master_detail_transaksi` as a 
+                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
+            ) as v WHERE v.status_up='SUDAH'
+        ")); ?>
+        <div class="widget-bg-color-icon card-box">
+            <div class="avatar-lg rounded-circle bg-icon-warning float-left">
+                <i class="fe-repeat font-24 avatar-title text-white"></i>
+            </div>
+            <div class="text-right">
+                <h3 class="text-dark mt-1"><a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_sudah_kembali"><?php echo number_format($sudah_kembali['total']); ?> Item</h3></h3>
+                <p class="text-muted mb-0">Total barang sudah kembali</p>
             </div>
             <div class="clearfix"></div>
         </div>
