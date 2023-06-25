@@ -17,35 +17,36 @@ if (!in_array($_SESSION['level'], array('1','2'))) {
 		</div>
 	</div>
 </div>   
-
+<?php if(in_array($_SESSION['level'], array('1'))) :?>
 <div class="row">
-	<div class="col-6">
-		<div class="card-box">
-			<label># Filter Tanggal</label>
+  <div class="col-6">
+    <div class="card-box">
+      <label># Filter Tanggal</label>
 
-			<form action="" method="POST">
-				<div class="form-group row">
-					<label class="col-sm-4 col-form-label" for="example-date">Tanggal Awal</label>
-					<div class="col-sm-10">
-						<input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_awal']; ?>" name="tgl_awal" id="example-date">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 col-form-label" for="example-date">Tanggal Akhir</label>
-					<div class="col-sm-10">
-						<input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_akhir']; ?>"  name="tgl_akhir" id="example-date">
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-sm-10">
-						<button class="btn btn-danger" type="submit" name="filter_tanggal">Cari</button>
-					</div>
-				</div>
+      <form action="" method="POST">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="example-date">Tanggal Awal</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_awal']; ?>" name="tgl_awal" id="example-date">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="example-date">Tanggal Akhir</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_akhir']; ?>"  name="tgl_akhir" id="example-date">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button class="btn btn-danger" type="submit" name="filter_tanggal">Cari</button>
+          </div>
+        </div>
 
-			</form>
-		</div>
-	</div>
+      </form>
+    </div>
+  </div>
 </div>
+<?php endif; ?>
 <?php 
 if (isset($_REQUEST['update_lunas'])) {
 	$sql = "UPDATE master_transaksi SET status='".$_REQUEST['status']."' WHERE id='".$_REQUEST['id']."'";
@@ -132,7 +133,7 @@ if (isset($_REQUEST['update_lunas'])) {
 										<td nowrap="" style="font-weight: bold;">Rp. <?php echo number_format($data['grand_total']); ?></td>
 										<td><?php echo status($data['status']); ?></td>
 										<td>
-											<?php if($detail_transaksi['pembayaran']=='transfer') : ?>
+											<?php if($data['pembayaran']=='transfer') : ?>
 												<?php echo (empty($data['bank'])) ? "<p class='text-danger'>BELUM UPLOAD</p>": "<p class='text-success'>SUDAH</p>"; ?>
 												<?php else : ?>
 													<p class='text-success'>CASH</p>

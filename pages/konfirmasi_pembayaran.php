@@ -90,9 +90,19 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                 <div class="col-12">
                     <form class="form-horizontal" enctype="multipart/form-data" role="form" action="" method="POST">
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="simpleinput">Status</label>
+                            <div class="col-sm-10">
+                                <?php if(!empty($detail['struk'])) :  ?>
+                                    <label class="text-success">Sudah Upload Struk</label>
+                                <?php else : ?>
+                                    <label class="text-danger">Belum Upload Struk</label>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="simpleinput">Konfirmasi Pembayaran</label>
                             <div class="col-sm-10">
-                                <input type="text" name="kode_transaksi" value="<?php echo $detail['kode_transaksi']; ?>" class="form-control" readonly>
+                                <input type="text" name="kode_transaksi" value="<?php echo $detail['kode_transaksi']; ?>" class="form-control" required="" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -104,7 +114,7 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="example-email">Rekening</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="bank" readonly>
+                                <select class="form-control" name="bank" readonly required="">
                                     <option value="">Pilih rekening</option>
                                     <option value="BNI" <?php echo ($detail['bank']=='BNI') ? "selected" : ""; ?>>BNI / 8839948575</option>
                                     <option value="BRI" <?php echo ($detail['bank']=='BRI') ? "selected" : ""; ?>>BRI / 9294847575</option>
@@ -117,7 +127,7 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                             <div class="col-sm-10">
                                 <?php if (!empty($detail['struk'])) :?>
                                     <img src="<?php echo $base_url.'/struk/'.$detail['struk']; ?>"  style="width: 300px; height: 300px"/>
-                                    <input type="file" class="form-control" name="gambar">
+                                    <input type="file" class="form-control" name="gambar" required="">
                                     <input type="hidden" class="form-control" name="nama_gambar" value="<?php echo $detail['gambar']; ?>">
                                     <?php else : ?>
                                         <input type="file" class="form-control" name="gambar" required="">

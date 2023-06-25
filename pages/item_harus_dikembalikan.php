@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<?php  if(empty($_REQUEST['id'])) : ?>
+<?php  if(!empty($_REQUEST['id'])) : ?>
 <div class="card">
     <div class="card-body">
         <div class="text-center">
@@ -116,7 +116,7 @@ if (isset($_REQUEST['update_lunas'])) {
 
 ?>
 
-
+<?php if(in_array($_SESSION['level'], array('1'))) :?>
 <div class="row">
   <div class="col-6">
     <div class="card-box">
@@ -145,6 +145,7 @@ if (isset($_REQUEST['update_lunas'])) {
     </div>
   </div>
 </div>
+<?php endif; ?>
 <div class="row">
     <div class="col-12">
         <div class="card-box">

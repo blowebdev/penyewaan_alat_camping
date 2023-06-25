@@ -45,6 +45,10 @@ if (isset($_REQUEST['hapus'])) {
                     <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#myModal">Tambah Status Pengiriman</button>
                     <br>
                     <br>
+                <?php else : ?>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#myModal">Konfirmasi barang</button>
+                    <br>
+                    <br>
                 <?php endif; ?>
 
                 <h4># Tracking pengiriman</h4>
@@ -53,6 +57,7 @@ if (isset($_REQUEST['hapus'])) {
                         <th>Tanggal</th>
                         <th>Status</th>
                         <th>Nama Pengirim</th>
+                        <th>Catatan</th>
                         <?php if(in_array($_SESSION['level'], array('1'))) : ?>
                             <th>Aksi</th>
                         <?php endif; ?>
@@ -69,6 +74,7 @@ if (isset($_REQUEST['hapus'])) {
                             <td><?php echo $data['tanggal']; ?></td>
                             <td><?php echo $data['status']; ?></td>
                             <td><?php echo $data['nm_pengirim']; ?></td>
+                            <td><?php echo $data['catatan']; ?></td>
                             <?php if(in_array($_SESSION['level'], array('1'))) : ?>
                                 <td>
                                     <form action="" method="POST">
@@ -98,22 +104,29 @@ if (isset($_REQUEST['hapus'])) {
                 <form action="" method="POST">
                     <label>Pilih Status</label>
                     <select class="form-control" name="status">
-                        <option value="">Pilih status</option>
-                        <option value="dikirim">Proses Dikirim</option>
-                        <option value="terlambat">Pengiriman diundur</option>
-                    </select>
+                        <?php if(in_array($_SESSION['level'], array('1'))) : ?>
+                            <option value="">Pilih status</option>
+                            <option value="dikirim">Proses Dikirim</option>
+                            <option value="terlambat">Pengiriman diundur</option>
+                            <?php else : ?>
+                                <option value="Barang sudah diterima">Barang Diterima</option>
+                            <?php endif; ?>
+                        </select>
+                         <?php if(in_array($_SESSION['level'], array('1'))) : ?>
+                        <label>Nama Pengirim</label>
+                        <input type="text" name="nm_pengirim" class="form-control" required="">
+                        <?php else : ?>
+                        <input type="hidden" name="nm_pengirim" value="-" class="form-control">
+                        <?php endif; ?>
 
-                    <label>Nama Pengirim</label>
-                    <input type="text" name="nama_pengirim" class="form-control" required="">
-
-                    <label>Catatan</label>
-                    <input type="text" name="catatan" class="form-control" required="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
-                    <button type="submit" name="simpan" class="btn btn-primary waves-effect waves-light">Simpan</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                        <label>Catatan</label>
+                        <input type="text" name="catatan" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                        <button type="submit" name="simpan" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
