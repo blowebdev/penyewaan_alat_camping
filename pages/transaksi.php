@@ -18,6 +18,34 @@ if (!in_array($_SESSION['level'], array('1','2'))) {
 	</div>
 </div>   
 
+<div class="row">
+	<div class="col-6">
+		<div class="card-box">
+			<label># Filter Tanggal</label>
+
+			<form action="" method="POST">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="example-date">Tanggal Awal</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_awal']; ?>" name="tgl_awal" id="example-date">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="example-date">Tanggal Akhir</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_akhir']; ?>"  name="tgl_akhir" id="example-date">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<button class="btn btn-danger" type="submit" name="filter_tanggal">Cari</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
 <?php 
 if (isset($_REQUEST['update_lunas'])) {
 	$sql = "UPDATE master_transaksi SET status='".$_REQUEST['status']."' WHERE id='".$_REQUEST['id']."'";
@@ -71,9 +99,19 @@ if (isset($_REQUEST['update_lunas'])) {
 							<tbody>
 								<?php 
 								if(in_array($_SESSION['level'], array('1'))){
-									$filter = "";
+									if (isset($_REQUEST['filter_tanggal'])) {
+										$filtere_tanggal = "WHERE created_at>='".$_REQUEST['tgl_awal']."' AND created_at<='".$_REQUEST['tgl_akhir']."'";
+									}else{
+										$filtere_tanggal = "";
+									}
+									$filter = "".$filtere_tanggal;
 								}else{
-									$filter = "WHERE a.id_pelanggan='".$_SESSION['id_pelanggan']."'";
+									if (isset($_REQUEST['filter_tanggal'])) {
+										$filtere_tanggal = "AND created_at>='".$_REQUEST['tgl_awal']."' AND created_at<='".$_REQUEST['tgl_akhir']."'";
+									}else{
+										$filtere_tanggal = "";
+									}
+									$filter = "WHERE a.id_pelanggan='".$_SESSION['id_pelanggan']."' ".$filtere_tanggal."";
 								}
 								$no = 1;
 								$total_rp = 0;

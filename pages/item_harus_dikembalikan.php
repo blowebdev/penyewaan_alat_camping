@@ -115,6 +115,36 @@ if (isset($_REQUEST['update_lunas'])) {
 }
 
 ?>
+
+
+<div class="row">
+  <div class="col-6">
+    <div class="card-box">
+      <label># Filter Tanggal</label>
+
+      <form action="" method="POST">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="example-date">Tanggal Awal</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_awal']; ?>" name="tgl_awal" id="example-date">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="example-date">Tanggal Akhir</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_akhir']; ?>"  name="tgl_akhir" id="example-date">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button class="btn btn-danger" type="submit" name="filter_tanggal">Cari</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
 <div class="row">
     <div class="col-12">
         <div class="card-box">
@@ -145,10 +175,28 @@ if (isset($_REQUEST['update_lunas'])) {
                                     $q = "WHERE a.kode_transaksi='".$_REQUEST['id']."' ";
                                 }else{
                                     if(in_array($_SESSION['level'],array('1'))) {
-                                        $q = "";
+
+                                        if (isset($_REQUEST['filter_tanggal'])) {
+                                          $filtere_tanggal = "WHERE create_at>='".$_REQUEST['tgl_awal']."' AND create_at<='".$_REQUEST['tgl_akhir']."'";
+                                        }else{
+                                          $filtere_tanggal = "";
+                                        }
+                                        $q = "".$filtere_tanggal ;
                                     }else{
-                                        $q = "WHERE a.id_pelanggan='".$_SESSION['id_pelanggan']."' ";
+                                        if (isset($_REQUEST['filter_tanggal'])) {
+                                          $filtere_tanggal = "AND create_at>='".$_REQUEST['tgl_awal']."' AND create_at<='".$_REQUEST['tgl_akhir']."'";
+                                        }else{
+                                          $filtere_tanggal = "";
+                                        }
+                                        $q = "WHERE a.id_pelanggan='".$_SESSION['id_pelanggan']."' ".$filtere_tanggal;
                                     }
+                                }
+
+
+                                if (isset($_REQUEST['filter_tanggal'])) {
+                                  $tgl = "AND v.create_at>='".$_REQUEST['tgl_awal']."' AND v.create_at<='".$_REQUEST['tgl_akhir']."'";
+                                }else{
+                                  $tgl="";
                                 }
 
                                 if($_REQUEST['id']=='item_harus_kembali'){
@@ -166,7 +214,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
                                    FROM `master_detail_transaksi` as a 
                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                   ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH' AND v.sisa_hari<>''");
+                                   ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH' AND v.sisa_hari<>'' ".$tgl);
                                 }elseif ($_REQUEST['id']=='item_sudah_kembali') {
                                  $trxsql =mysqli_query($conn,"
                                    SELECT v.*, SUM(v.qty) as total FROM (
@@ -182,7 +230,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
                                    FROM `master_detail_transaksi` as a 
                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                   ) as v WHERE v.status_up='SUDAH' AND v.sisa_hari<>''");
+                                   ) as v WHERE v.status_up='SUDAH' AND v.sisa_hari<>'' ".$tgl);
                                 }elseif ($_REQUEST['id']=='total_barang_dipinjam') {
                                    $trxsql =mysqli_query($conn,"
                                    SELECT v.*, SUM(v.qty) as total FROM (
