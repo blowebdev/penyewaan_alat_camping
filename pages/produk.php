@@ -33,8 +33,8 @@
                     <label>Urutkan harga</label>
                     <select name="sql" class="form-control">
                         <option value="">Urutkan Harga</option>
-                        <option value="ORDER BY harga DESC" <?php echo ($_REQUEST['sql']=='ORDER BY harga DESC') ? "selected": ""; ?>>Harga terendah</option>
-                        <option value="ORDER BY harga ASC" <?php echo ($_REQUEST['sql']=='ORDER BY harga ASC') ? "selected": ""; ?>>Harga tertinggi</option>
+                        <option value="ORDER BY harga DESC" <?php echo ($_REQUEST['sql']=='ORDER BY harga ASC') ? "selected": ""; ?>>Harga terendah</option>
+                        <option value="ORDER BY harga ASC" <?php echo ($_REQUEST['sql']=='ORDER BY harga DESC') ? "selected": ""; ?>>Harga tertinggi</option>
                     </select>
                     <label>Input Pencarian</label>
                     <input type="text" name="q" value="<?php echo $_REQUEST['q']; ?>" placeholder="Input karakter" class="form-control">

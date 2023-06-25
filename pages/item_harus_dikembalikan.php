@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<?php  if(!empty($_REQUEST['id'])) : ?>
+<?php  if(!empty($_REQUEST['id2'])) : ?>
 <div class="card">
     <div class="card-body">
         <div class="text-center">
@@ -124,7 +124,7 @@ if (isset($_REQUEST['update_lunas'])) {
 
       <form action="" method="POST">
         <div class="form-group row">
-          <label class="col-sm-4 col-form-label" for="example-date">Tanggal Awal</label>
+          <label class="col-sm-6 col-form-label" for="example-date">Tanggal Awal</label>
           <div class="col-sm-10">
             <input class="form-control" type="date" value="<?php echo $_REQUEST['tgl_awal']; ?>" name="tgl_awal" id="example-date">
           </div>
