@@ -215,7 +215,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
                                    FROM `master_detail_transaksi` as a 
                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                   ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH' AND v.sisa_hari<>'' ".$tgl);
+                                   ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH' AND v.sisa_hari<>'' ".$tgl." GROUP BY  v.id_detail");
                                 }elseif ($_REQUEST['id']=='item_sudah_kembali') {
                                  $trxsql =mysqli_query($conn,"
                                    SELECT v.*, SUM(v.qty) as total FROM (
@@ -231,7 +231,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
                                    FROM `master_detail_transaksi` as a 
                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                   ) as v WHERE v.status_up='SUDAH' AND v.sisa_hari<>'' ".$tgl);
+                                   ) as v WHERE v.status_up='SUDAH' AND v.sisa_hari<>'' ".$tgl." GROUP BY v.id_detail");
                                 }elseif ($_REQUEST['id']=='total_barang_dipinjam') {
                                    $trxsql =mysqli_query($conn,"
                                    SELECT v.*, SUM(v.qty) as total FROM (
@@ -247,7 +247,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                    DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari
                                    FROM `master_detail_transaksi` as a 
                                    LEFT JOIN master_produk as b ON a.id_produk = b.id
-                                   ) as v");
+                                   ) as v ");
                                 }else{
                                   $trxsql = mysqli_query($conn,"
                                       SELECT a.*, b.*, a.id as id_detail,  DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
