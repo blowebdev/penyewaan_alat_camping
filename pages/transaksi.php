@@ -192,7 +192,7 @@ if (isset($_REQUEST['update_lunas'])) {
 												<td style="font-weight: bold;"></td>
 												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_harga); ?></td>
 												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($pengiriman); ?></td>
-												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_rp); ?></td>
+												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_rp+$pengiriman); ?></td>
 												<td></td>
 												<td></td>
 											</tr>

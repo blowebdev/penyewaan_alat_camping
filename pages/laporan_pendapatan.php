@@ -110,7 +110,7 @@ if (!in_array($_SESSION['level'], array('1','2'))) {
 												<td style="font-weight: bold;"></td>
 												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_harga); ?></td>
 												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($pengiriman); ?></td>
-												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_rp); ?></td>
+												<td style="font-weight: bold;" nowrap="">Rp. <?php echo number_format($total_rp+$pengiriman); ?></td>
 											</tr>
 										</tfoot>
 									</table>
