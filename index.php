@@ -202,6 +202,12 @@ session_start();
 									<a href="#"><i class="fa fa-list"></i> Laporan<div class="arrow-down"></div></a>
 									<ul class="submenu">
 										<li>
+											<a href="<?php echo $base_url; ?>laporan_pendapatan">Informasi Pendapatan</a>
+											<a href="<?php echo $base_url; ?>laporan_stock">Informasi Stock</a>
+											<a href="<?php echo $base_url; ?>laporan_jenis">Informasi Jenis</a>
+											<a href="<?php echo $base_url; ?>laporan_pengiriman">Informasi Pengiriman / Pengembalian barang / Denda</a>
+											<a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_harus_kembali">Barang yang harus di kembalikan</a>
+											<a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_sudah_kembali">Barang yang sudah dikembalikan</a>
 											<a href="<?php echo $base_url; ?>laporan">Penyewaan</a>
 										</li>
 									</ul>
