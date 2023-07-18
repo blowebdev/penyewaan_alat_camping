@@ -83,12 +83,20 @@ session_start();
 						<li class="dropdown notification-list">
 							<a class="nav-link dropdown-toggle  waves-effect waves-light" href="<?php echo $base_url; ?>cart" role="button" aria-haspopup="false" aria-expanded="false">
 								<i class="fe-shopping-cart noti-icon"></i>
-								<?php 
-
-								?>
 								<span class="badge badge-danger rounded-circle noti-icon-badge" id="qty">0</span>
 							</a>
 						</li>
+					<?php else : ?>
+						<?php if(in_array($_SESSION['level'], array('1'))): 
+							$total_isine_pesanan = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM master_transaksi WHERE status='PROSES'"));
+						?>
+							<li class="dropdown notification-list">
+								<a class="nav-link dropdown-toggle  waves-effect waves-light" href="<?php echo $base_url; ?>transaksi" role="button" aria-haspopup="false" aria-expanded="false">
+									<i class="fe-bell noti-icon"></i>
+									<span class="badge badge-danger rounded-circle noti-icon-badge"><?php echo $total_isine_pesanan; ?></span>
+								</a>
+							</li>
+						<?php endif; ?>
 					<?php endif; ?>
 					<?php if(!empty($_SESSION['username'])) : ?>
 						<li class="dropdown notification-list">

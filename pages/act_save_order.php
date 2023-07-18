@@ -1,6 +1,17 @@
-<br>
-<br>
 <?php 
+namespace Midtrans;
+
+include 'midtrans/Midtrans.php';
+// Set Your server key
+// Set your Merchant Server Key
+\Midtrans\Config::$serverKey = 'SB-Mid-server-iBzAOc56j8V3RO34uD1g9XnU';
+// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+\Midtrans\Config::$isProduction = false;
+// Set sanitization on (default)
+\Midtrans\Config::$isSanitized = true;
+// Set 3DS transaction for credit card to true
+\Midtrans\Config::$is3ds = true;
+
 error_reporting(0);
 session_start();
 include '../config/koneksi.php';
@@ -18,6 +29,20 @@ $total_barang = $_REQUEST['total_barang'];
 $grand_total = $_REQUEST['grand_total'];
 $total_transaksi = $_REQUEST['total_transaksi'];
 
+$params = array(
+	'transaction_details' => array(
+		'order_id' => $kode_transaksi,
+		'gross_amount' => $grand_total,
+	)
+);
+
+ob_start();
+if($_REQUEST['pembayaran']=='transfer') :
+	$snapToken = \Midtrans\Snap::getSnapToken($params);
+	$paymentUrl = 'https://app.sandbox.midtrans.com/snap/v2/vtweb/'.$snapToken;
+endif;
+
+
 $save_sql = "INSERT INTO `master_transaksi`(
 `id_pelanggan`,
 `kode_transaksi`,
@@ -32,7 +57,7 @@ $save_sql = "INSERT INTO `master_transaksi`(
 `grand_total`,
 `pembayaran`,
 `created_at`,
-`status`) VALUES (
+`status`,`token`) VALUES (
 '".$id_pelanggan."',
 '".$kode_transaksi."',
 '".$total_barang."',
@@ -45,7 +70,7 @@ $save_sql = "INSERT INTO `master_transaksi`(
 '".$biaya_kirim."',
 '".$grand_total."',
 '".$pembayaran."',
-'".date('Y-m-d H:i:s')."','PROSES')";
+'".date('Y-m-d H:i:s')."','PROSES','".$snapToken."')";
 $simpan = mysqli_query($conn,$save_sql);
 if ($simpan) {
 	$produk = "";
@@ -116,8 +141,15 @@ if ($simpan) {
 	<strong>Redirect........</strong>
 	</div>
 	</div>
-	<meta http-equiv="refresh" content="1; url='.$base_url.'invoice/'.$_REQUEST['kode_transaksi'].'">
 	';
+
+	if($pembayaran=='transfer'){
+		echo "<a href='".$paymentUrl."' class='btn btn-danger' target='_blank'>Bayar sekarang</a>";
+	}else{
+		echo '<meta http-equiv="refresh" content="1; url='.$base_url.'invoice/'.$_REQUEST['kode_transaksi'].'">';
+	}
+	// <meta http-equiv="refresh" target="_blank" content="0; url='.$paymentUrl.'">
 }else{
 	echo "Error...";
 }
+ob_end_flush();

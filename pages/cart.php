@@ -70,6 +70,10 @@
                                                 LEFT JOIN master_produk as b ON a.id_produk = b.id
                                                 WHERE a.id_pelanggan='".$id_pelanggan."'
                                                 ORDER BY a.date_created ASC");
+                                            $total = mysqli_num_rows($cart_sql);
+                                            if($total<=0) : 
+                                                echo '<tr><td colspan="8" style="text-align:center"><a href="./" class="btn btn-danger">Kembali belanja</a></td></tr>';
+                                            else : 
                                             while ($data = mysqli_fetch_array($cart_sql)) {
                                                 ?>
                                                 <tr>
@@ -191,6 +195,8 @@
                                         </div> <!-- end col -->
                                     </div> <!-- end row-->
                                     </form>
+
+                                <?php endif; ?>
                                 </div>
                             </div>
                         </div>
