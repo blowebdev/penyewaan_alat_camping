@@ -277,7 +277,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                         if($data['status_up']=='SUDAH'){
                                            echo '<span class="badge badge-success p-1">SUDAH</span>';
                                        }else if($data['status_up']=='SUDAH CUSTOMER'){
-                                           echo '<span class="badge badge-warning p-1">SUDAH DIKEMBALIKAN CUSTOMER</span>';
+                                           echo '<span class="badge badge-warning p-1">SUDAH DIKEMBALIKAN</span>';
                                        }
                                        else{
                                            echo ($data['sisa_hari']>=1) ? '<span class="badge badge-danger p-1">Perlu Dikembali</span>': '<span class="badge badge-warning p-1">Proses</span>';
@@ -294,6 +294,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                                         <form action="" method="POST">
                                                             <label>Isi Denda Pengembalian
                                                                <input type="number" value="<?php echo ($data['sisa_hari']<=1) ? 0 : 5000*$data['sisa_hari']; ?>" name="denda" class="form-control">
+
                                                            </label>
                                                            <input type="hidden" name="id_detail" value="<?php echo $data['id_detail']; ?>">
                                                            <input type="hidden" name="status" value="SUDAH">
@@ -310,6 +311,7 @@ if (isset($_REQUEST['update_lunas'])) {
                                                         <form action="" method="POST">
                                                             <label>Isi Denda Pengembalian
                                                                <input type="number" readonly="" value="<?php echo ($data['sisa_hari']<=1) ? 0 : 5000*$data['sisa_hari']; ?>" name="denda" class="form-control">
+                                                                <i style="color:red; font-size: 12px; line-height: 1px"><i class="fa fa-information-o"></i> Pembayaran denda <br>hanya dilakukan di outlet penyewaan dan di kurir</i>
                                                            </label>
                                                            <input type="hidden" name="id_detail" value="<?php echo $data['id_detail']; ?>">
                                                            <input type="hidden" name="status" value="SUDAH CUSTOMER">

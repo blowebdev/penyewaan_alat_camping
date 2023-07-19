@@ -86,6 +86,34 @@ session_start();
 								<span class="badge badge-danger rounded-circle noti-icon-badge" id="qty">0</span>
 							</a>
 						</li>
+						<li class="dropdown notification-list">
+
+								<?php 
+									$sqlee =" SELECT v.*, SUM(v.qty) as total FROM (
+                                   SELECT 
+                                      a.create_at, 
+                                      a.kode_transaksi, 
+                                      b.nama,  
+                                      a.id as id_detail, 
+                                      a.qty,  
+                                      DATEDIFF(a.tgl_selesai, a.tgl_pinjam) AS total_hari,
+                                   IF(NOW() > a.tgl_selesai, 'Perlu dikembalikan', 'Proses') AS status, 
+                                   a.status as status_up,
+                                   DATEDIFF(NOW(),a.tgl_selesai) AS sisa_hari,
+                                   a.id_pelanggan
+                                   FROM `master_detail_transaksi` as a 
+                                   LEFT JOIN master_produk as b ON a.id_produk = b.id
+                                   ) as v WHERE v.status='Perlu dikembalikan'  AND v.status_up<>'SUDAH' AND v.sisa_hari<>'' 
+                                   AND v.id_pelanggan='".$_SESSION['id_pelanggan']."'
+                                    GROUP BY  v.id_detail";
+                                    // echo $sqlee;
+									$total_isine_pesanan = mysqli_num_rows(mysqli_query($conn,$sqlee));
+								?>
+								<a class="nav-link dropdown-toggle  waves-effect waves-light" href="<?php echo $base_url; ?>item_harus_dikembalikan" role="button" aria-haspopup="false" aria-expanded="false">
+									<i class="fe-bell noti-icon"></i>
+									<span class="badge badge-danger rounded-circle noti-icon-badge"><?php echo $total_isine_pesanan; ?></span>
+								</a>
+							</li>
 					<?php else : ?>
 						<?php if(in_array($_SESSION['level'], array('1'))): 
 							$total_isine_pesanan = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM master_transaksi WHERE status='PROSES'"));
@@ -214,8 +242,8 @@ session_start();
 											<a href="<?php echo $base_url; ?>laporan_stock">Informasi Stock</a>
 											<a href="<?php echo $base_url; ?>laporan_jenis">Informasi Jenis</a>
 											<a href="<?php echo $base_url; ?>laporan_pengiriman_total">Informasi Pengiriman / Pengembalian barang / Denda</a>
-											<a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_harus_kembali">Barang yang harus di kembalikan</a>
-											<a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_sudah_kembali">Barang yang sudah dikembalikan</a>
+											<!-- <a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_harus_kembali">Barang yang harus di kembalikan</a>
+											<a href="<?php echo $base_url; ?>item_harus_dikembalikan/item_sudah_kembali">Barang yang sudah dikembalikan</a> -->
 											<a href="<?php echo $base_url; ?>laporan">Penyewaan</a>
 										</li>
 									</ul>

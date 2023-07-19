@@ -132,6 +132,7 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                                     <?php else : ?>
                                         <input type="file" class="form-control" name="gambar" required="">
                                     <?php endif; ?>
+                                    <label class="text-danger">Maksimal 5 Mb</label>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -139,7 +140,7 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                                 <label class="col-sm-2 col-form-label" for="example-email">Aksi</label>
                                 <div class="col-sm-10">
                                         <a href="<?php echo $base_url; ?>transaksi" class="btn btn-danger">Kembali</a>
-                                        <button class="btn btn-primary" type="submit" name="simpan">Simpan</button>
+                                        <button class="btn btn-primary" type="submit" name="simpan">Kirim</button>
                                         <?php else : ?>
                                             
                                     <?php endif; ?>

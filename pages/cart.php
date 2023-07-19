@@ -122,6 +122,11 @@
                                         </tfoot>
                                     </table>
                                 </div> 
+                                <div class="alert alert-info">
+                                    Untuk menyewa siapkan : <br>
+                                    1. KTP/SIM/KITAS atau Kartu tanda pengenal dan
+                                    Serahkan ke kurir yang mengantar barang.
+                                </div>
                                 <form action="act_save_order" method="POST">
                                 <div class="mt-3">
                                     <label for="example-textarea" class="form-label">Nama</label>
@@ -139,8 +144,8 @@
                                     <label for="example-textarea" class="form-label">Pengiriman</label>
                                     <select class="form-control" name="pengiriman" id="pengiriman" onchange="updateHarga('<?php echo $total_harga; ?>')" required="">
                                         <option value="">Pengiriman</option>
-                                        <option value="dikirim">Dikirim (Area Mojokerto) 50.000</option>
-                                        <option value="ambil_sendiri">Ambil sendiri</option>
+                                        <option value="dikirim">Dikirim dan Dijemput (Area Mojokerto) Rp. 50.000</option>
+                                        <!-- <option value="ambil_sendiri">Ambil sendiri</option> -->
                                     </select>
                                 </div>
                                 <div class="mt-3">
