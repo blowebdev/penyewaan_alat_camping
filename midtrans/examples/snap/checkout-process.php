@@ -8,8 +8,8 @@ namespace Midtrans;
 require_once dirname(__FILE__) . '/../../Midtrans.php';
 // Set Your server key
 // can find in Merchant Portal -> Settings -> Access keys
-Config::$serverKey = '<your server key>';
-Config::$clientKey = '<your client key>';
+Config::$serverKey = 'SB-Mid-server-P64RH-_8qObzXY8VLvsuGDZe';
+Config::$clientKey = 'SB-Mid-client-C8Mowx6C3-tJrj2C';
 
 // non-relevant function only used for demo/example purpose
 printExampleWarningMessage();
@@ -85,7 +85,7 @@ $customer_details = array(
 );
 
 // Optional, remove this to display all available payment methods
-$enable_payments = array('credit_card','cimb_clicks','mandiri_clickpay','echannel');
+$enable_payments = array('other_qris','bni_va');
 
 // Fill transaction details
 $transaction = array(

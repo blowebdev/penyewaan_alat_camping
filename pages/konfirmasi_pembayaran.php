@@ -119,6 +119,11 @@ $detail = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_transaksi 
                                     <option value="BNI" <?php echo ($detail['bank']=='BNI') ? "selected" : ""; ?>>BNI / 8839948575</option>
                                     <option value="BRI" <?php echo ($detail['bank']=='BRI') ? "selected" : ""; ?>>BRI / 9294847575</option>
                                     <option value="BCA" <?php echo ($detail['bank']=='BCA') ? "selected" : ""; ?>>BCA / 0199288384</option>
+                                    <option value="DANA" <?php echo ($detail['bank']=='DANA') ? "selected" : ""; ?>>DANA / 081994004961</option>
+                                    <option value="LINK_AJA" <?php echo ($detail['bank']=='LINK_AJA') ? "selected" : ""; ?>>LINK_AJA / 081994004961</option>
+                                    <option value="QRIS" <?php echo ($detail['bank']=='QRIS') ? "selected" : ""; ?>>QRIS</option>
+                                    <option value="GOPAY" <?php echo ($detail['bank']=='GOPAY') ? "selected" : ""; ?>>GOPAY / 08199400496</option>
+                                    <option value="OVO" <?php echo ($detail['bank']=='OVO') ? "selected" : ""; ?>>OVO / 08199400496</option>
                                 </select>
                             </div>
                         </div>

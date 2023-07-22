@@ -4,7 +4,7 @@ namespace Midtrans;
 include 'midtrans/Midtrans.php';
 // Set Your server key
 // Set your Merchant Server Key
-\Midtrans\Config::$serverKey = 'SB-Mid-server-iBzAOc56j8V3RO34uD1g9XnU';
+\Midtrans\Config::$serverKey = 'SB-Mid-server-P64RH-_8qObzXY8VLvsuGDZe';
 // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
 \Midtrans\Config::$isProduction = false;
 // Set sanitization on (default)
@@ -28,8 +28,10 @@ $biaya_kirim = $_REQUEST['biaya_kirim'];
 $total_barang = $_REQUEST['total_barang'];
 $grand_total = $_REQUEST['grand_total'];
 $total_transaksi = $_REQUEST['total_transaksi'];
+$enable_payments = array('other_qris','bni_va');
 
 $params = array(
+	'enabled_payments' => $enable_payments,
 	'transaction_details' => array(
 		'order_id' => $kode_transaksi,
 		'gross_amount' => $grand_total,
