@@ -43,6 +43,7 @@
                                 <label>-</label><br>
                                 <button class="btn  btn-lg btn-primary" onclick="showProduk();"><i class="fa fa-search"></i> Cari</button>
                             </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -87,17 +88,16 @@
     </div><!-- end col -->
     <script src="<?php echo $base_url; ?>assets/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript">
-        // showProduk();
+        showProduk();
         function showProduk() {
-           $("#detail_produk").html('<div class="spinner-border m-2" role="status"><span class="sr-only">Loading...</span></div>');
+           $("#detail_produk").html('<div class="spinner-border m-2" role="status"><span class="sr-only">Loading...</span></div> Loading....');
            const tglPinjam = $(".tanggal_pinjam").val();
            const tglSelesai = $(".tanggal_selesai").val();
-           console.log(tglSelesai);
            $.ajax({
             url: '<?php echo $base_url; ?>pages/act_produk.php',
-            type: 'post',
+            type: 'get',
             dataType: 'html',
-            data: {tanggal_pinjam: tglPinjam, tanggal_selesai : tglSelesai},
+            data: {tanggal_pinjam: tglPinjam, tanggal_selesai : tglSelesai, q : '<?php echo @$_REQUEST['q']; ?>', sql : '<?php echo @$_REQUEST['order']; ?>'},
             success:function(data){
                 $("#detail_produk").html(data);
             }

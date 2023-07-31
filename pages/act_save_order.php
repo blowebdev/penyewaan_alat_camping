@@ -28,10 +28,18 @@ $biaya_kirim = $_REQUEST['biaya_kirim'];
 $total_barang = $_REQUEST['total_barang'];
 $grand_total = $_REQUEST['grand_total'];
 $total_transaksi = $_REQUEST['total_transaksi'];
-$enable_payments = array('other_qris','bni_va');
-
+$enable_payments = array('other_qris','bca_va');
+$customer_details = array(
+    'first_name'    => $nama,
+    'last_name'     => $nama,
+    'email'         => "test@litani.com",
+    'phone'         => $hp,
+    'billing_address'  => $alamat,
+    'shipping_address' => $alamat
+);
 $params = array(
 	'enabled_payments' => $enable_payments,
+	'customer_details' => $customer_details,
 	'transaction_details' => array(
 		'order_id' => $kode_transaksi,
 		'gross_amount' => $grand_total,
