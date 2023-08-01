@@ -145,7 +145,7 @@
                                     <select class="form-control" name="pengiriman" id="pengiriman" onchange="updateHarga('<?php echo $total_harga; ?>')" required="">
                                         <option value="">Pengiriman</option>
                                         <option value="dikirim">Dikirim dan Dijemput (Area Mojokerto) Rp. 50.000</option>
-                                        <!-- <option value="ambil_sendiri">Ambil sendiri</option> -->
+                                        <option value="ambil_sendiri">Ambil sendiri</option>
                                     </select>
                                 </div>
                                 <div class="mt-3">
@@ -154,6 +154,7 @@
                                         <option value="">Pembayaran</option>
                                         <option value="cash">Cash</option>
                                         <option value="transfer">Transfer</option>
+                                        <option value="payment">Payment</option>
                                     </select>
                                 </div>
                                 <!-- Add note input-->

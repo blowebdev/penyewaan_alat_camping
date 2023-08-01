@@ -28,14 +28,14 @@ $biaya_kirim = $_REQUEST['biaya_kirim'];
 $total_barang = $_REQUEST['total_barang'];
 $grand_total = $_REQUEST['grand_total'];
 $total_transaksi = $_REQUEST['total_transaksi'];
-$enable_payments = array('other_qris','bca_va');
+$enable_payments = array('other_qris','bni_va','bca', 'bri_va');
 $customer_details = array(
-    'first_name'    => $nama,
-    'last_name'     => $nama,
-    'email'         => "test@litani.com",
-    'phone'         => $hp,
-    'billing_address'  => $alamat,
-    'shipping_address' => $alamat
+	'first_name'    => $nama,
+	'last_name'     => $nama,
+	'email'         => "test@litani.com",
+	'phone'         => $hp,
+	'billing_address'  => $alamat,
+	'shipping_address' => $alamat
 );
 $params = array(
 	'enabled_payments' => $enable_payments,
@@ -45,11 +45,12 @@ $params = array(
 		'gross_amount' => $grand_total,
 	)
 );
-
 ob_start();
-if($_REQUEST['pembayaran']=='transfer') :
+if($_REQUEST['pembayaran']=='payment') :
 	$snapToken = \Midtrans\Snap::getSnapToken($params);
 	$paymentUrl = 'https://app.midtrans.com/snap/v2/vtweb/'.$snapToken;
+	// $_SESSION['params'] = $params;
+	$_SESSION['link'] = $paymentUrl;
 endif;
 
 
@@ -154,7 +155,8 @@ if ($simpan) {
 	';
 
 	if($pembayaran=='transfer'){
-		echo "<a href='".$paymentUrl."' class='btn btn-danger' target='_blank'>Bayar sekarang</a>";
+		// echo "<a href='".$paymentUrl."' class='btn btn-danger' target='_blank'>Bayar sekarang</a>";
+		echo '<meta http-equiv="refresh" content="1; url='.$base_url.'invoice/'.$_REQUEST['kode_transaksi'].'">';
 	}else{
 		echo '<meta http-equiv="refresh" content="1; url='.$base_url.'invoice/'.$_REQUEST['kode_transaksi'].'">';
 	}
