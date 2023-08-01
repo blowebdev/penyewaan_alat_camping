@@ -385,6 +385,8 @@ session_start();
 			<!-- Sweet alert init js-->
 			<script src="<?php echo $base_url; ?>assets/js/pages/sweet-alerts.init.js"></script>
 
+			  <script src="<?php echo $base_url; ?>assets/libs/custombox/custombox.min.js"></script>
+
 			<!-- Datatables init -->
 			<script src="<?php echo $base_url; ?>assets/js/pages/datatables.init.js"></script>
 			<!-- App js -->

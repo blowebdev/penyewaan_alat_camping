@@ -60,11 +60,15 @@
 							</div>
 							<div class="product-action">
 								<div class="d-flex">
+									<input type="hidden" id="stock_akhir<?php echo $dapod['id']; ?>" value="<?php echo $stock_akhir; ?>">
 									<?php if($stock_akhir<=0) :  ?>
 										<button onclick="alert('Maaf stock habis')" class="btn btn-danger d-block w-100 action-btn m-2">Maaf stock Habis</button>
+									<?php elseif (empty($_REQUEST['tanggal_selesai'])) : ?>
+										<a href="javascript: void(0);"  data-toggle="modal" class="btn btn-danger d-block w-100 action-btn m-2"><i class="ti-shopping-cart"></i> Pilih tanggal dahulu</a>
 										<?php else : ?>
-											<a href="javascript: void(0);" onclick="keranjang_belanja('<?php echo $dapod['id']; ?>', '<?php echo $dapod['harga']; ?>')" class="btn btn-primary d-block w-100 action-btn m-2">
+											<a href="javascript: void(0);"  data-toggle="modal" data-target=".show_qty<?php echo $dapod['id']; ?>" class="btn btn-primary d-block w-100 action-btn m-2">
 												<i class="ti-shopping-cart"></i> Keranjang</a>
+
 											<?php endif; ?>
 										</div>
 									</div>
@@ -88,6 +92,24 @@
 							</div>
 						</div>
 
+
+
+							<div class="modal fade show_qty<?php echo $dapod['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="myCenterModalLabel">Masukan Quantity</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										</div>
+										<div class="modal-body">
+											<input type="number" class="form-control" placeholder="Masukan quantity" id="qty<?php echo $dapod['id']; ?>">
+										</div>
+										<div class="modal-footer">
+											<button class="btn btn-block btn-danger" onclick="keranjang_belanja('<?php echo $dapod['id']; ?>', '<?php echo $dapod['harga']; ?>')">Simpan</button>
+										</div>
+									</div>
+								</div>
+							</div>
 					<?php } ?>
 				</div>
 			</div>
@@ -95,35 +117,68 @@
 
 
 		<script type="text/javascript">
+			function modal_qty(id,harga){
+				$(".show_qty").modal('toggle');
+			}
+
+			function save_keranjang(id, harga, qty){
+				$.ajax({
+					url: '<?php echo $base_url; ?>pages/act_keranjang_belanja.php',
+					type: 'POST',
+					dataType: 'json',
+					data: {id:id, harga:harga, qty: qty, tgl_pinjam : '<?php echo $_REQUEST['tanggal_pinjam']; ?>', tgl_selesai: '<?php echo $_REQUEST['tanggal_selesai']; ?>' },
+					success : function(data){
+						if(data.status=='success'){
+							swal({
+								title: "Berhasil",
+								text: "Data berhasil dimasukan ke keranjang belanja",
+								type: "success"
+							}).then(function() {
+								updateQty();
+							});
+						}else{
+							Swal.fire({
+								title: "Maaf !",
+								text: "Harus login terlebih dahulu",
+								type: "error",
+								confirmButtonClass: "btn btn-confirm mt-2"
+							})
+						}
+					}
+				});
+			}
 
 			function keranjang_belanja(id, harga) {
 				<?php  if(!empty($_SESSION['id_pelanggan'])) :?>
 					var id = id;
 					var harga = harga;
-					$.ajax({
-						url: '<?php echo $base_url; ?>pages/act_keranjang_belanja.php',
-						type: 'POST',
-						dataType: 'json',
-						data: {id:id, harga:harga, tgl_pinjam : '<?php echo $_REQUEST['tanggal_pinjam']; ?>', tgl_selesai: '<?php echo $_REQUEST['tanggal_selesai']; ?>' },
-						success : function(data){
-							if(data.status=='success'){
-								swal({
-									title: "Berhasil",
-									text: "Data berhasil dimasukan ke keranjang belanja",
-									type: "success"
-								}).then(function() {
-									updateQty();
-								});
-							}else{
-								Swal.fire({
-									title: "Maaf !",
-									text: "Harus login terlebih dahulu",
-									type: "error",
-									confirmButtonClass: "btn btn-confirm mt-2"
-								})
-							}
-						}
-					});
+					var qty = parseInt($("#qty"+id).val());
+					var stock = parseInt($("#stock_akhir"+id).val());
+					if(!qty){
+						// alert('Quantity harus diisi');
+
+						Swal.fire({
+								title: "Maaf !",
+								text: "Quantity wajib diisi",
+								type: "error",
+								confirmButtonClass: "btn btn-confirm mt-2"
+							});
+						// break;
+					}else if(qty > stock){
+						// alert('Quantity melebihi stock');
+
+						Swal.fire({
+								title: "Maaf !",
+								text: "Quantity melebihi stock",
+								type: "error",
+								confirmButtonClass: "btn btn-confirm mt-2"
+							});
+						// break;
+					}else{
+						// alert('berhasil');
+						save_keranjang(id,harga,qty);
+					}
+					
 					<?php else : ?>
 						Swal.fire({
 							title: "Maaf !",
@@ -135,3 +190,6 @@
 					<?php endif; ?>
 				}
 			</script>
+
+
+

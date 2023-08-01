@@ -92,6 +92,7 @@ if (isset($_REQUEST['update_lunas'])) {
 									<th width="30%">Total Harga</th>
 									<th width="30%">Biaya Kirim</th>
 									<th width="30%">Grand Total</th>
+									<th width="30%">Status Pengiriman</th>
 									<th width="30%">Status Pembayaran</th>
 									<th width="30%">Struk</th>
 									<th width="1%" nowrap="">Aksi</th>
@@ -121,6 +122,9 @@ if (isset($_REQUEST['update_lunas'])) {
 								$total_harga = 0;
 								$wxc = mysqli_query($conn,"SELECT a.*, DATE(created_at) as tanggal_pemesanan FROM master_transaksi as a ".$filter." ORDER BY created_at ASC");
 								while ($data = mysqli_fetch_array($wxc)) {
+
+									  $showPengiriman = mysqli_query($conn,"SELECT * FROM master_tracking_pengiriman WHERE kode_transaksi='".$data['kode_transaksi']."' ORDER BY tanggal DESC");
+									  $pengiriman = mysqli_fetch_array($showPengiriman);
 									?>
 									<tr>
 										<td nowrap=""><?php echo $data['tanggal_pemesanan']; ?></td>
@@ -131,6 +135,7 @@ if (isset($_REQUEST['update_lunas'])) {
 										<td>Rp. <?php echo number_format($data['total_transaksi']); ?></td>
 										<td>Rp. <?php echo number_format($data['biaya_kirim']); ?></td>
 										<td nowrap="" style="font-weight: bold;">Rp. <?php echo number_format($data['grand_total']); ?></td>
+										<td><?php echo $pengiriman['status']; ?></td>
 										<td><?php echo status($data['status']); ?></td>
 										<td>
 											<?php if($data['pembayaran']=='transfer') : ?>
