@@ -180,6 +180,7 @@ $detail_transaksi = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM master_
                                     <a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $detail_transaksi['kode_transaksi']; ?>" class="btn btn-danger">Upload Struk pembayaran</a>
                                     <?php elseif ($detail_transaksi['pembayaran']=='payment') : ?>
                                      <!-- <br> -->
+                                      <a href="<?php echo $base_url; ?>konfirmasi_pembayaran/<?php echo $detail_transaksi['kode_transaksi']; ?>" class="btn btn-danger">Upload Struk pembayaran</a><br>
                                     Bayar secara instant dibawah ini...<br>
 
                                     <a href="<?php echo $_SESSION['link']; ?>" target="_blank" class="btn btn-success">Bayar Sekarang</a>

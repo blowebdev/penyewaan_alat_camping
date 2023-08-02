@@ -67,9 +67,9 @@
                                         <?php 
                                         if (isset($_REQUEST['filter_tanggal'])) {
                                           $filtere_tanggal = "WHERE create_at>='".$_REQUEST['tgl_awal']."' AND create_at<='".$_REQUEST['tgl_akhir']."'";
-                                      }else{
-                                          $filtere_tanggal = "";
-                                      }
+                                          }else{
+                                              $filtere_tanggal = "";
+                                          }
 
                                       $keuntungan = mysqli_fetch_array(mysqli_query($conn,"SELECT SUM(grand_total) as total FROM master_transaksi
                                         ".$filtere_tanggal."
